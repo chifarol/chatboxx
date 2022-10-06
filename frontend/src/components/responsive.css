@@ -1,0 +1,135 @@
+/* medium screen */
+@media screen and (max-width: 830px) and (min-width: 481px) {
+  .profile-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .profile-one {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 20px 0 !important;
+  }
+  .profile-one img {
+    width: 100% !important;
+  }
+  .profile-two {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+/* small screen */
+@media screen and (max-width: 480px) {
+  .nav-container {
+    display: none !important;
+  }
+  .nav-sm-bottom-container {
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 80px !important;
+    background-color: var(--dark) !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    color: var(--light-gray) !important;
+  }
+  .nav-sm-bottom-container svg {
+    width: 32px !important;
+    fill: var(--light-gray) !important;
+  }
+  .nav-sm-bottom-container img {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 4px !important;
+  }
+  .general-body,
+  .general-top {
+    padding: 15px !important;
+  }
+  .nav-sm-item {
+    position: relative !important;
+    padding: 20px !important;
+    display: flex !important;
+    height: auto !important;
+    height: 100% !important;
+    width: 100% !important;
+  }
+  .nav-sm-item .notification-dot {
+    position: absolute !important;
+    right: 5px !important;
+  }
+  .nav-sm-item.active,
+  .nav-sm-item:hover {
+    background-color: var(--green) !important;
+    color: var(--dark) !important;
+  }
+  .nav-sm-item.active svg,
+  .nav-sm-item:hover svg {
+    fill: var(--dark) !important;
+    margin-bottom: auto !important;
+  }
+  .main-container {
+    margin-bottom: 80px !important;
+  }
+  .dm-middle,
+  .room-middle {
+    padding: 25px !important;
+  }
+  .chat-bubble-me-container,
+  .chat-bubble-group-container {
+    max-width: 288px !important;
+  }
+  .profile-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .profile-one {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 20px 0 !important;
+  }
+  .profile-one img {
+    width: 100% !important;
+  }
+  .profile-two {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .back-button {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .room-details-container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .room-details-two {
+    margin: 0 !important;
+  }
+  .search-item-room-middle {
+    max-width: 200px !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+  .list-item-group-two-heading,
+  .list-item-group-two-msg {
+    max-width: 200px !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+  .message-box-container {
+    margin: 0 20px !important;
+  }
+}

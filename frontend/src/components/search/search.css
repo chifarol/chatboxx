@@ -1,0 +1,128 @@
+.search-container {
+  width: 100%;
+  max-width: 660px;
+}
+.search-search {
+  width: 100%;
+  display: flex;
+  margin: 20px 0;
+}
+.search-button {
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--green);
+  border-radius: 4px;
+  padding: 10px;
+  color: var(--dark);
+  align-self: flex-end;
+}
+.search-search input {
+  background-color: var(--dark);
+  height: 46px;
+  padding: 10px;
+  color: var(--gray);
+  border-radius: 4px;
+  width: 100%;
+}
+.search-tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+.search-tabs > p {
+  padding: 10px;
+}
+.search-tabs > p.active {
+  border-bottom: 4px solid var(--green);
+  color: var(--green);
+}
+.search-tabs > span {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+.search-item-room {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark);
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.search-item-room-top {
+  display: flex;
+  align-items: center;
+}
+.search-item-room-top img {
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.search-item-room-top-host {
+  margin: 0 20px;
+}
+.search-item-room-top-host span {
+  color: var(--green);
+  margin-left: 5px;
+}
+.search-item-room-middle {
+  margin: 20px 0;
+  max-width: 400px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.search-item-room-end {
+  border-top: 1px solid var(--gray-blue);
+  display: flex;
+  padding-top: 10px;
+}
+.search-item-room-end-members {
+  width: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.search-item-room-end-members svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--gray);
+}
+.search-item-room-end-members span {
+  /* margin-top: auto; */
+}
+.search-item-room-end-topic-container {
+  max-width: 250px;
+  overflow: hidden;
+}
+.search-item-room-end-topic {
+  border-radius: 4px;
+  padding: 8px;
+  margin-left: 5px;
+  border: 1px solid var(--gray-blue);
+}
+.search-people-container {
+  display: flex;
+  flex-direction: column;
+}
+.search-people-item {
+  display: flex;
+  align-items: center;
+  background-color: var(--dark);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  width: 100%;
+}
+.search-people-item:hover,
+.search-item-room:hover {
+  transform: scale(1.02);
+}
+.search-people-item img {
+  height: 42px;
+  margin-right: 20px;
+  border-radius: 4px;
+}

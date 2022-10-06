@@ -1,0 +1,92 @@
+.listings-container {
+  width: 100%;
+  max-width: 660px;
+}
+.listings-search {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.listings-search-button {
+  width: 100px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--green);
+  border-radius: 4px;
+  padding: 10px;
+  color: var(--dark);
+  align-self: flex-end;
+}
+.listings-search input {
+  background-color: var(--dark);
+  height: 46px;
+  padding: 10px;
+  color: var(--gray);
+  border-radius: 4px;
+  width: 100%;
+}
+.list-item-group {
+  display: flex;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  width: 100%;
+  align-items: center;
+  background-color: var(--dark);
+}
+.list-item-group:hover {
+  transform: scale(1.03);
+}
+
+.list-item-group-one {
+  display: flex;
+  align-items: center;
+}
+.list-item-group-one img {
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.list-item-group-two {
+  margin: 0 12px;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+.list-item-group-two-chat {
+  display: flex;
+  align-items: center;
+  font-style: italic;
+}
+.list-item-group-two-chat > span {
+  margin-right: 10px;
+}
+.list-item-group-two-heading,
+.list-item-group-two-msg {
+  max-width: 400px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.list-item-group-two-chat > svg {
+  height: 12px;
+  width: 12px;
+  fill: var(--dark-gray);
+  margin-right: 10px;
+}
+.list-item-group-two-chat > svg.received {
+  fill: var(--green);
+}
+.list-item-group-three {
+  height: 30px;
+  width: 30px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-left: auto;
+}

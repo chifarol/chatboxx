@@ -1,0 +1,94 @@
+.app-wrapper {
+  display: flex;
+  background-color: var(--gray-blue);
+  height: 100%;
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 300px;
+  background-color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--light-gray);
+  font-size: 20px;
+  font-weight: 700;
+  height: 100vh;
+}
+.nav-container svg {
+  width: 32px;
+  fill: var(--light-gray);
+}
+.nav-logo-container svg {
+  fill: var(--green);
+}
+.nav-logo-brand {
+  color: var(--green);
+}
+.nav-top {
+  height: 80px;
+}
+.nav-top > a {
+  font-size: 18px;
+  display: flex;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  height: 100%;
+}
+.nav-top > a > span,
+.nav-middle > a > span,
+.nav-end span {
+  margin: 0 20px;
+}
+.nav-middle-item {
+  font-size: 18px;
+  padding: 10px 10px 10px 30px;
+  display: flex;
+  height: auto;
+  align-items: center;
+}
+.nav-middle-item.active,
+.nav-middle-item:hover {
+  background-color: var(--green);
+  color: var(--dark);
+}
+.nav-middle-item.active svg,
+.nav-middle-item:hover svg {
+  fill: var(--dark);
+}
+#notification-dot {
+  margin-left: auto !important;
+  width: 15px !important;
+  height: 10px !important;
+  fill: var(--red) !important;
+  align-self: flex-start !important;
+}
+.nav-end {
+  background: var(--dark-purple);
+  display: flex;
+  margin-top: auto;
+  padding: 15px 30px;
+  align-items: center;
+}
+.nav-end > a {
+  display: flex;
+  align-items: center;
+}
+.nav-end img {
+  width: 48px;
+  border-radius: 4px;
+}
+.nav-end-profile-expander {
+  fill: var(--light-gray);
+  transform: rotate(270deg);
+  height: 20px;
+  margin-left: auto;
+}
+.main-container {
+  flex-grow: 1;
+  width: 100%;
+  background-color: var(--gray-blue);
+}

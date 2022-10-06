@@ -1,0 +1,59 @@
+.create-room-form {
+  display: flex;
+  flex-direction: column;
+  color: var(--gray);
+  height: auto;
+  justify-content: space-between;
+  max-width: 500px;
+}
+.create-room-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.create-room-label {
+  margin-bottom: 10px;
+}
+.create-room-field input,
+.create-room-field textarea {
+  background-color: var(--dark);
+  /* border: 3px solid var(--gray); */
+  height: 50px;
+  padding: 10px;
+  color: var(--gray);
+  border-radius: 4px;
+  width: 100%;
+}
+.create-room-extra {
+  margin: 5px 0;
+}
+.create-room-button {
+  right: 0;
+  top: -19px;
+  width: 150px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--green);
+  border-radius: 4px;
+  padding: 10px;
+  margin: 20px 0;
+  color: var(--dark);
+}
+.create-room-submit {
+  width: 135px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--green);
+  border-radius: 4px;
+  padding: 10px;
+  margin: 20px 0;
+  color: var(--dark);
+  align-self: flex-end;
+}
