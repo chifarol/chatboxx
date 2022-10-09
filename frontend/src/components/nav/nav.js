@@ -11,12 +11,18 @@ const NotificationDot = ({ notif }) => {
   return <div id="notification-dot">{notif.length}</div>;
 };
 const NavSmBottom = () => {
+  // for main user obj
   const [user, setUser] = useState(false);
   const [active, setActive] = useState("1");
+  // socket io object
   const { socket } = useContext(SocketContext);
+  // room and dm notification utitlities
   const { notif, updateNotif, roomNotif, updateRoomNotif } =
     useContext(DMListContext);
   const location = useLocation();
+  /**
+   * updates the active tab
+   */
   function updateActive() {
     switch (location.pathname) {
       case "/my_rooms":
@@ -48,14 +54,13 @@ const NavSmBottom = () => {
   }, [location.pathname]);
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log("receive_message will now update notif context");
+      // update dm notifications
       updateNotif(data.from);
     });
-    console.log("receive_message will now update notif context");
 
     //rooms
     socket.on("receive_room_message", (data) => {
-      console.log("room_message will now update notif context with", data);
+      // update room notifications
       updateRoomNotif(data._id);
     });
   }, [socket]);
@@ -136,9 +141,11 @@ const Nav = () => {
   const [user, setUser] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
   const [active, setActive] = useState("");
+  // room and dm notification utitlities
   const { notif, updateNotif, roomNotif, updateRoomNotif } =
     useContext(DMListContext);
   const location = useLocation();
+  // socket io object
   const { socket } = useContext(SocketContext);
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
   const config = {
@@ -172,18 +179,16 @@ const Nav = () => {
   }, [location.pathname]);
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log("receive_message will now update notif context");
+      // update dm notifications
       updateNotif(data.from);
     });
-    console.log("receive_message will now update notif context");
 
     //rooms
     socket.on("receive_room_message", (data) => {
-      console.log("room_message will now update notif context with", data);
+      // update room messsage notifications
       updateRoomNotif(data.room_id);
     });
   }, [socket]);
-  useEffect(() => {}, []);
   return (
     <div className="app-wrapper">
       <Alert />

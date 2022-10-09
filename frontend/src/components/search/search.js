@@ -4,6 +4,9 @@ import axios from "axios";
 import "./search.css";
 import { Spinner } from "../loading-spinner/spinner";
 
+/**
+ * renders no results found page
+ */
 export const NoResult = ({ text }) => {
   return (
     <div className="full-illustration-container pos-relative">
@@ -85,9 +88,10 @@ export const NoResult = ({ text }) => {
     </div>
   );
 };
-export const NoSearchString = () => {
-  return <span className="search-no-string">Please enter a search string</span>;
-};
+
+/**
+ * renders search result for "rooms" tab
+ */
 const RoomSearchResult = ({ rooms }) =>
   rooms.map((room) => {
     return (
@@ -126,6 +130,10 @@ const RoomSearchResult = ({ rooms }) =>
       </Link>
     );
   });
+
+/**
+ * renders search result for users - "people" tab
+ */
 const PeopleSearchResult = ({ people }) =>
   people.map((user) => {
     return (
@@ -151,49 +159,64 @@ export const Search = () => {
       auth: userLocal.token,
     },
   };
-
+  /**
+   * calls search api for rooms
+   */
   const searchRooms = () => {
-    console.log("searchTerm is ", searchString);
     axios
       .get(`/api/fetch_rooms?criteria=${searchString}`, config)
       .then((res) => {
-        console.log(res.data.Rooms);
         setRooms(res.data.Rooms);
+        // turn off loading spinner
         setLoading(false);
       })
       .catch((e) => {
         console.log(e.response.data);
+        // turn off loading spinner
         setLoading(false);
       });
   };
+  /**
+   * calls search api for people
+   */
   const searchPeople = () => {
     axios
       .get(`/api/users?username=${searchString}`, config)
       .then((res) => {
-        console.log(res.data.users);
+        // set search resut for "people"
         setPeople(res.data.users);
+        // turn off loading spinner
         setLoading(false);
       })
       .catch((e) => {
         console.log(e.response.data);
+        // turn off loading spinner
         setLoading(false);
       });
   };
+
+  /**
+   * triggers room and people search
+   */
   const search = () => {
+    // if search term is empty
     if (searchString.trim() === "") {
       return;
     }
+    // turn on loading spinner
     setLoading(true);
     setDisplayString(`Search results for "${searchString}"`);
     searchPeople();
     searchRooms();
   };
+  /**
+   *  search top rooms
+   */
   const searchTop = () => {
     setLoading(true);
     axios
       .get(`/api/fetch_rooms?criteria=<top>`, config)
       .then((res) => {
-        console.log("top rooms", res);
         setRooms(res.data.Rooms);
         setDisplayString(
           `Automatically showing top rooms, Please Enter a Search Term`
@@ -205,6 +228,7 @@ export const Search = () => {
         setLoading(false);
       });
   };
+  // search top rooms by default/on mount
   useEffect(() => {
     searchTop();
   }, []);

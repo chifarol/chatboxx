@@ -12,7 +12,7 @@ import DMRouter from "./middle/dm/dm-router";
 import P404 from "./P404/P404";
 
 function App() {
-  const navigate = useNavigate();
+  // on mount , check validity of user credentials
   useEffect(() => {
     CheckAuth();
   }, []);

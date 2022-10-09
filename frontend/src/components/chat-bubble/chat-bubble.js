@@ -146,7 +146,6 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
     setLoading(true);
     // msg is a room message
     if (isRoom === "true") {
-      console.log("deleting room message");
       // delete room message api
       axios
         .post(
@@ -155,10 +154,8 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
           config
         )
         .then((res) => {
-          console.log(res);
           //
           if (res.data.status === false) {
-            console.log("res.data.status", res.data.status);
             // trigger alert flash message
             setAlert({
               text: "sorry, couldn't delete message",
@@ -168,7 +165,6 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
             // turn off loading spinner
             setLoading(false);
           } else {
-            console.log("res.data.status", res.data.status);
             // trigger alert flash message
             setAlert({
               text: "message deleted",
@@ -199,7 +195,6 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
       axios
         .post("/api/delete_dm", { msg_id: msg._id }, config)
         .then((res) => {
-          console.log(res);
           // trigger flash message
           setAlert({
             text: "message deleted",

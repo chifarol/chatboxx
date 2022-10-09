@@ -39,7 +39,6 @@ export const DMListContextProvider = ({ children }) => {
           if (res.data.DmMsgs.some((msg) => msg.date > e[1])) {
             // add username to unreadUsernameArr
             unreadUsernameArr.push(e[0]);
-            console.log("unread msg from ", e[0], new Set(unreadUsernameArr));
           }
           // when loop reaches last element, update the notif state with new unique value set
           if (index === arr.length - 1) {
@@ -60,7 +59,6 @@ export const DMListContextProvider = ({ children }) => {
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
-        console.log("DMids", res.data.user.dms);
         getDMsArray(res.data.user.dms);
       })
       .catch((e) => {
@@ -75,11 +73,6 @@ export const DMListContextProvider = ({ children }) => {
    * @param string username username of third party to add/remove to notif array/set.
    */
   function updateNotif(username) {
-    console.log(
-      "updateNotif fxn will now update notif context",
-      "username",
-      username
-    );
     // if user is not currently in the third party dm screen
     if (window.location.pathname !== `/dm/${username}`) {
       if (!notif.includes(username)) {
@@ -109,7 +102,6 @@ export const DMListContextProvider = ({ children }) => {
       axios
         .get(`/api/room?id=${room[0]}`, config)
         .then((res) => {
-          console.log(`room with ${room[0]} =>`, res.data.room);
           // add lastseen to room object
           res.data.room.lastseen = room[1];
           roomArray.push(res.data.room);
@@ -121,7 +113,6 @@ export const DMListContextProvider = ({ children }) => {
           ) {
             // add room id to unreadRoomArr
             unreadRoomArr.push(room[0]);
-            console.log("unread msg from ", room[0], new Set(unreadRoomArr));
           }
           // when it reaches the last room in array
           if (index === rooms.length - 1) {
@@ -140,7 +131,6 @@ export const DMListContextProvider = ({ children }) => {
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
-        console.log("roomids", res.data.user.rooms);
         getRoomsArray(res.data.user.rooms);
       })
       .catch((e) => {
@@ -161,10 +151,6 @@ export const DMListContextProvider = ({ children }) => {
     }
     // if user is not currently viewing the room
     else {
-      console.log(
-        "updateNotif fxn room notif context not in room screen with id ",
-        `/room/${id}`
-      );
       getRooms();
     }
   }

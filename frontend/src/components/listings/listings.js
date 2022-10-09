@@ -97,11 +97,9 @@ export const GroupListings = () => {
    */
   function sortArray(roomArr) {
     let roomArray = roomArr;
-    console.log("roomArray result", roomArray);
     // sort in desc order by date
     roomArray.sort((a, b) => {
       if (a.msgs.length > 0 && b.msgs.length > 0) {
-        console.log("non-empty room msgs obj");
         return (
           (a.msgs[a.msgs.length - 1].date - b.msgs[b.msgs.length - 1].date) * -1
         );
@@ -128,13 +126,11 @@ export const GroupListings = () => {
       axios
         .get(`/api/room?id=${room[0]}`, config)
         .then((res) => {
-          console.log(`room with ${room[0]} =>`, res.data.room);
           res.data.room.lastseen = room[1];
           roomArray.push(res.data.room);
           // update states when loop gets to the last element
           if (index === rooms.length - 1) {
             setLoading(false);
-            console.log("roomArray result", roomArray);
             // sort in desc order by date
             sortArray(roomArray);
           }
@@ -154,7 +150,6 @@ export const GroupListings = () => {
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
-        console.log("roomids", res.data.user.rooms);
         getRoomsArray(res.data.user.rooms);
       })
       .catch((e) => {
@@ -178,8 +173,6 @@ export const GroupListings = () => {
       // sort modified room array by most recent messages
       sortArray(userRoomsClone);
       setMiscUserRooms(userRoomsClone);
-      console.log("userRoomsClone", userRoomsClone, "index", index);
-      console.log("received message in listings", data);
     });
   }, [socket]);
   return (
@@ -197,7 +190,6 @@ export const GroupListings = () => {
         </div>
       )}
       {userMiscRooms.map((room) => {
-        console.log("trying to render room in list item", room);
         return (
           <RoomListingItem
             room={room}
@@ -222,22 +214,13 @@ const DMListingItem = ({ dm, newDm }) => {
    * dm[3]-->last message between main user and the third party
    * dm[4]-->array containing msg objects (dms) between third party and user
    */
-  console.log("msgs from dm[4]", dm[4]);
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
   // last message in dm
   const [lastMsg, setLastMsg] = useState(dm[4][dm[4].length - 1]);
   // number of unread messages
   const [unreadLen, setUnreadLen] = useState(0);
   let unreadMsgs = dm[4].filter((e) => e.date > dm[1]);
-  console.log(
-    "unreadMsgs from " + dm[0],
-    unreadMsgs.length,
-    "unread kumkum",
-    dm[4][dm[4].length - 1].date - dm[1],
-    dm[4][dm[4].length - 1].date,
-    dm[1],
-    dm[4][dm[4].length - 1]
-  );
+
   useEffect(() => {
     if (newDm.from === dm[0]) {
       // update laste message with newMsg
@@ -245,7 +228,6 @@ const DMListingItem = ({ dm, newDm }) => {
       // update number of unread messages
       setUnreadLen(unreadLen + 1);
     }
-    console.log("newDm", newDm);
   }, [newDm]);
 
   // set last message on mount
@@ -257,7 +239,6 @@ const DMListingItem = ({ dm, newDm }) => {
     } else {
       setLastMsg(unreadMsgs[unreadMsgs.length - 1]);
     }
-    console.log("lastMsg dm", lastMsg);
   }, []);
   return (
     <Link
@@ -320,7 +301,6 @@ export const DMListings = () => {
       let aMsgs = a[4];
       let bMsgs = b[4];
       if (aMsgs.length > 0 && bMsgs.length > 0) {
-        console.log("non-empty dm msgs obj");
         return (
           (aMsgs[aMsgs.length - 1].date - bMsgs[bMsgs.length - 1].date) * -1
         );
@@ -337,7 +317,6 @@ export const DMListings = () => {
     socket.on("receive_message", (data) => {
       // get index of third party sender from main user's dm actvity
       let index = userDMsClone.findIndex((item) => item[0] === data.from); //item[0]-->username of third partyfrom main user's dm actvity
-      console.log("userDMsClone", userDMsClone, "index", index);
       if (index > -1) {
         // update temp. dm objects array with new message
         userDMsClone[index][4].push(data);
@@ -345,9 +324,7 @@ export const DMListings = () => {
         setMiscUserDMs(userDMsClone);
         setNewDM(data);
       } else {
-        console.log("incoming msg listing not for you");
       }
-      console.log("received message in listings", data);
     });
   }, [socket]);
 
@@ -373,12 +350,10 @@ export const DMListings = () => {
       axios
         .get(`/api/dm?target=${e[0]}`, config)
         .then((res) => {
-          console.log("res.data.DmMsgs", res.data.DmMsgs);
           dmArray.push([...e, res.data.DmMsgs]);
 
           // update states when loop gets to the last element
           if (index === arr.length - 1) {
-            console.log("dmArray result", dmArray);
             setLoading(false);
             sortArray(dmArray);
             setUserDMs(dmArray);
@@ -401,7 +376,6 @@ export const DMListings = () => {
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
-        console.log("DMids", res.data.user.dms);
         let dmArray = res.data.user.dms;
         getDMsArray(dmArray);
       })

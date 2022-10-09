@@ -23,7 +23,6 @@ export const CheckAuth = () => {
       window.location.pathname = "/login";
     }
   } else if (userLocal.token) {
-    console.log("userLocal", userLocal);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -32,11 +31,8 @@ export const CheckAuth = () => {
     };
     axios
       .get("/api/check-auth", config)
-      .then((res) => {
-        console.log("user token valid");
-      })
+      .then((res) => {})
       .catch((e) => {
-        console.log("user token invalid");
         if (
           window.location.pathname !== "/register" &&
           window.location.pathname !== "/login"
@@ -133,11 +129,9 @@ export const Register = () => {
   const password = useRef(null);
   function checkUsername(string) {
     if (/([^a-zA-Z_]+)/g.test(string)) {
-      console.log("invalid topic");
       setTopicError("only alphabets(a-z) and underscores(_) allowed");
       return false;
     } else {
-      console.log("valid topic");
       setTopicError("");
       return true;
     }
@@ -184,7 +178,6 @@ export const Register = () => {
           } else {
             setLoading(false);
             setAuthError(res.data.error);
-            console.log(res);
           }
         })
         .catch((e) => {});

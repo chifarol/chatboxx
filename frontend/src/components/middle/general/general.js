@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import "./general.css";
 import Profile from "../profile/profile";
-import CreateRoom, { UpdateRoom } from "../create-room/create-room";
+import CreateRoom from "../create-room/create-room";
 import Settings from "../settings/settings";
 import { DMListings, GroupListings } from "../../listings/listings";
 import { Search } from "../../search/search";
@@ -41,8 +41,6 @@ const General = ({ type, title }) => {
       <div className="general-body scrollbar">
         {type === "create_room" ? (
           <CreateRoom />
-        ) : type === "update_room" ? (
-          <UpdateRoom />
         ) : type === "my_settings" ? (
           <Settings />
         ) : type === "my_rooms" ? (

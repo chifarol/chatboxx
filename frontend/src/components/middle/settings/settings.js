@@ -7,13 +7,20 @@ import axios from "axios";
 
 const Settings = () => {
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
+  // fetching user data state
   let [loading, setLoading] = useState(true);
+  // update processing state
   let [updateLoading, setUpdateLoading] = useState(false);
+  // for user bio input
   let bio = useRef("");
+  // temporary image file object for user picture
   let [tempPicture, setTempPicture] = useState({});
-  let [picture, setPicture] = useState("");
+  // temporary room picture image file path(src) for display
   let [displayImg, setDisplayImg] = useState("");
+  // for user object
   let [user, setUser] = useState({});
+
+  //fetch user data on mount
   useEffect(() => {
     const config = {
       headers: {
@@ -21,6 +28,7 @@ const Settings = () => {
         auth: userLocal.token,
       },
     };
+    //fetch user data api
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
@@ -35,9 +43,8 @@ const Settings = () => {
   }, []);
 
   /**
-   *uploads user picture to cloudinary and updates user info in backend
-   * @param string pictureUrl file path of new profile pictur.
-   * @return string (hex color)
+   *updates user info in backend
+   * @param string pictureUrl file path of new profile picture.
    */
   function uploadUser(pictureUrl = "") {
     const body = {};
@@ -58,11 +65,11 @@ const Settings = () => {
       .post(`/api/user`, body, config)
       .then((res) => {
         setUpdateLoading(false);
-        console.log(res.data.user);
-
         let newUser = res.data.user;
         newUser.token = userLocal.token;
+        // update user object in session storage
         sessionStorage.setItem("user", JSON.stringify(newUser));
+        // reload page to reflect changes
         window.location.reload();
       })
       .catch((e) => {
@@ -70,17 +77,24 @@ const Settings = () => {
         console.log(e);
       });
   }
+  /**
+   * uploads user picture to cloudinary and call user update
+   */
   async function updateUser() {
     setUpdateLoading(true);
+    // if user profile image has a file object, upload to cloudinary before calling uploadUser() fxn
     if (tempPicture.name) {
       console.log("tempPicture", tempPicture);
       imageUpload(tempPicture, "user", userLocal.username)
         .then((res) => uploadUser(res))
         .catch((e) => {
           console.log(e);
+          // turn off uploading state on cloudinary upload error
           setUpdateLoading(false);
         });
-    } else {
+    }
+    // if user profile image has no file object, just call uploadUser() fxn
+    else {
       uploadUser();
     }
   }

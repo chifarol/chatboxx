@@ -23,7 +23,6 @@ export const SocketContextProvider = ({ children }) => {
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
-        console.log("roomids for socket join", res.data.user.rooms);
         // join all room ids in main users room activity array i.e userObject.rooms
         socket.emit("join_rooms", { rooms: res.data.user.rooms });
       })
@@ -43,7 +42,7 @@ export const SocketContextProvider = ({ children }) => {
   });
 
   socket.on("disconnect", (reason) => {
-    console.log("disconnecting ftd", reason);
+    console.log("socket connection disconnecting...", reason);
     // remove username from list tracking online users on disconnect
     socket.emit("offline", { username: userLocal.username });
   });

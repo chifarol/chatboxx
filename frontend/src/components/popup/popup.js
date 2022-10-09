@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { logOut } from "../auth/auth";
 import "./popup.css";
 
+/**
+ * renders pop up for widescreen nav bar
+ */
 export const NavProfilePopUp = () => {
   return (
     <div className="pop-up-nav-container bg-gray-blue f16 w500">
@@ -15,6 +18,9 @@ export const NavProfilePopUp = () => {
     </div>
   );
 };
+/**
+ * renders pop up for mobile nav bar
+ */
 export const NavProfilePopUpSM = () => {
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
   return (
