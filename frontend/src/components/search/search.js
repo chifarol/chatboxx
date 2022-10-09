@@ -89,41 +89,43 @@ export const NoSearchString = () => {
   return <span className="search-no-string">Please enter a search string</span>;
 };
 const RoomSearchResult = ({ rooms }) =>
-  rooms.map((room) => (
-    <Link
-      to={`/room/${room._id}`}
-      className="search-item-room gray"
-      key={room._id}
-    >
-      <p className="search-item-room-top">
-        <img src={room.picture} crossOrigin="anonymous" />
-        <span className="search-item-room-top-host">
-          Host <span>@{room.host.username}</span>
-        </span>
-      </p>
-      <p className="search-item-room-middle f16">{room.name}</p>
-      <div className="search-item-room-end">
-        <div className="search-item-room-end-members">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="20"
-            width="48"
-            viewBox="0 20 48 20"
-          >
-            <path d="M0 36v-2.65q0-1.95 2.075-3.15T7.5 29q.6 0 1.175.025.575.025 1.125.125-.4.85-.6 1.75-.2.9-.2 1.9V36Zm12 0v-3.2q0-3.25 3.325-5.275Q18.65 25.5 24 25.5q5.4 0 8.7 2.025Q36 29.55 36 32.8V36Zm27 0v-3.2q0-1-.2-1.9-.2-.9-.6-1.75.55-.1 1.125-.125Q39.9 29 40.5 29q3.35 0 5.425 1.2Q48 31.4 48 33.35V36ZM7.5 27.5q-1.45 0-2.475-1.025Q4 25.45 4 24q0-1.45 1.025-2.475Q6.05 20.5 7.5 20.5q1.45 0 2.475 1.025Q11 22.55 11 24q0 1.45-1.025 2.475Q8.95 27.5 7.5 27.5Zm33 0q-1.45 0-2.475-1.025Q37 25.45 37 24q0-1.45 1.025-2.475Q39.05 20.5 40.5 20.5q1.45 0 2.475 1.025Q44 22.55 44 24q0 1.45-1.025 2.475Q41.95 27.5 40.5 27.5ZM24 24q-2.5 0-4.25-1.75T18 18q0-2.5 1.75-4.25T24 12q2.5 0 4.25 1.75T30 18q0 2.5-1.75 4.25T24 24Z" />
-          </svg>
-          <span className="w300 f12">{room.members.length}</span>
+  rooms.map((room) => {
+    return (
+      <Link
+        to={`/room/${room._id}`}
+        className="search-item-room gray"
+        key={room._id}
+      >
+        <p className="search-item-room-top">
+          <img src={room.picture} crossOrigin="anonymous" />
+          <span className="search-item-room-top-host">
+            Host <span>@{room.host.username}</span>
+          </span>
+        </p>
+        <p className="search-item-room-middle f16">{room.name}</p>
+        <div className="search-item-room-end">
+          <div className="search-item-room-end-members">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20"
+              width="48"
+              viewBox="0 20 48 20"
+            >
+              <path d="M0 36v-2.65q0-1.95 2.075-3.15T7.5 29q.6 0 1.175.025.575.025 1.125.125-.4.85-.6 1.75-.2.9-.2 1.9V36Zm12 0v-3.2q0-3.25 3.325-5.275Q18.65 25.5 24 25.5q5.4 0 8.7 2.025Q36 29.55 36 32.8V36Zm27 0v-3.2q0-1-.2-1.9-.2-.9-.6-1.75.55-.1 1.125-.125Q39.9 29 40.5 29q3.35 0 5.425 1.2Q48 31.4 48 33.35V36ZM7.5 27.5q-1.45 0-2.475-1.025Q4 25.45 4 24q0-1.45 1.025-2.475Q6.05 20.5 7.5 20.5q1.45 0 2.475 1.025Q11 22.55 11 24q0 1.45-1.025 2.475Q8.95 27.5 7.5 27.5Zm33 0q-1.45 0-2.475-1.025Q37 25.45 37 24q0-1.45 1.025-2.475Q39.05 20.5 40.5 20.5q1.45 0 2.475 1.025Q44 22.55 44 24q0 1.45-1.025 2.475Q41.95 27.5 40.5 27.5ZM24 24q-2.5 0-4.25-1.75T18 18q0-2.5 1.75-4.25T24 12q2.5 0 4.25 1.75T30 18q0 2.5-1.75 4.25T24 24Z" />
+            </svg>
+            <span className="w300 f12">{room.members.length}</span>
+          </div>
+          <div className="search-item-room-end-topic-container margin-left-auto flex">
+            {room.topics.map((e) => (
+              <div key={e} className="search-item-room-end-topic">
+                {e}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="search-item-room-end-topic-container margin-left-auto flex">
-          {room.topics.map((e) => (
-            <div key={e} className="search-item-room-end-topic">
-              {e}
-            </div>
-          ))}
-        </div>
-      </div>
-    </Link>
-  ));
+      </Link>
+    );
+  });
 const PeopleSearchResult = ({ people }) =>
   people.map((user) => {
     return (
@@ -149,6 +151,7 @@ export const Search = () => {
       auth: userLocal.token,
     },
   };
+
   const searchRooms = () => {
     console.log("searchTerm is ", searchString);
     axios
@@ -213,11 +216,11 @@ export const Search = () => {
           Search
         </span>
         <input
-          placeholder="Search my rooms"
+          placeholder="Enter search term"
           onInput={(e) => setSearchString(e.target.value)}
         />
       </div>
-      <div className="search-phrase">{displayString}</div>
+      <div className="search-phrase w300 f12">{displayString}</div>
       <div className="search-tabs">
         <p
           onClick={() => setTab(true)}

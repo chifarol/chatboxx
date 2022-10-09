@@ -7,6 +7,11 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const { normalRoutes } = require("./normal-routes");
+const { apiRoutes } = require("./api-routes");
+const { updateDMActivity, updateRoomActivity } = require("./utils");
+const { CLOUDINARY_NAME } = process.env;
+const { model, DirectMSG, RoomMSG, Room, User } = require("./models.js");
 require("./connection");
 require("dotenv").config();
 const { Server } = require("socket.io");
@@ -21,15 +26,34 @@ const io = new Server(server, {
 });
 
 let connectUsers = {};
+let currentScreen = {};
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
-  socket.on("join_room", (data) => {
-    socket.join(data);
+  socket.on("join_rooms", (data) => {
+    data.rooms.forEach((room) => {
+      socket.join(room[0]);
+      console.log("joined room with id", room[0]);
+    });
   });
   socket.on("error", function (err) {
     if (err.description) console.log(err.description);
     else console.log(err); // Or whatever you want to do
+  });
+  socket.on("currentScreen", (data) => {
+    currentScreen[data.username] = data.target;
+  });
+  socket.on("isTargetReading", ({ username, target }) => {
+    console.log(
+      `currentScreen[username] of ${username} is ${currentScreen[username]}`
+    );
+    if (!currentScreen[username]) {
+      socket.emit("targetIsReading", false);
+    } else if (currentScreen[target] === username) {
+      socket.emit("targetIsReading", true);
+    } else {
+      socket.emit("targetIsReading", false);
+    }
   });
   socket.on("online", (data) => {
     connectUsers[data.username] = socket.id;
@@ -37,9 +61,35 @@ io.on("connection", (socket) => {
     console.log(`${data.username} just came online or reconnected`);
     console.log(`connectUsers`);
     console.log(connectUsers);
-    // socket
-    //     .to(socket.id)
-    //     .emit("online_suc", socket.id, data.message);
+  });
+  socket.on("isOnline", (data) => {
+    if (connectUsers[data.target]) {
+      console.log(`${data.target} is online`);
+      socket.emit("isOnlineResult", true);
+    } else {
+      console.log(`${data.target} is offline`);
+      socket.emit("isOnlineResult", false);
+    }
+  });
+  socket.on("lastSeen", async (data) => {
+    const { isRoom, targetUsernameOrId, mainUsername } = data;
+    let mainUserObj = await User.findOne({ username: mainUsername });
+    if (!isRoom) {
+      console.log(
+        `${mainUsername} with id ${connectUsers[mainUsername]} lastSeen with ${targetUsernameOrId}`
+      );
+      let targetUserObj = await User.findOne({ username: targetUsernameOrId });
+      if (mainUserObj && targetUserObj) {
+        updateDMActivity(mainUserObj, targetUserObj, false);
+      }
+    } else {
+      console.log(
+        `${mainUsername} with id ${connectUsers[mainUsername]} lastSeen in room ${targetUsernameOrId}`
+      );
+      if (mainUserObj) {
+        updateRoomActivity(mainUserObj, targetUsernameOrId);
+      }
+    }
   });
 
   socket.on("offline", (data) => {
@@ -55,9 +105,13 @@ io.on("connection", (socket) => {
         `new message ${data.message.body} to ${target_username} with id ${connectUsers[target_username]}`
       );
       socket
-        .to(connectUsers[target_username])
+        .to([connectUsers[target_username], socket.id])
         .emit("receive_message", data.message);
     }
+  });
+  socket.on("msg_room", (data) => {
+    console.log("msg room", data);
+    socket.to(data.room_id).emit("receive_room_message", data);
   });
   socket.on("disconnect", (reason) => {
     console.log("disconnect in server", reason);
@@ -67,10 +121,6 @@ io.on("connection", (socket) => {
 server.listen(4001, () => {
   console.log("socket IO SERVER IS RUNNING");
 });
-
-const { normalRoutes } = require("./normal-routes");
-const { apiRoutes } = require("./api-routes");
-const { CLOUDINARY_NAME } = process.env;
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");

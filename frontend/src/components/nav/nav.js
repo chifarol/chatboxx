@@ -1,25 +1,21 @@
 import "./nav.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Alert from "../alert/alert";
+import axios from "axios";
 import { NavProfilePopUp, NavProfilePopUpSM } from "../popup/popup";
+import { SocketContext } from "../contexts/socket";
+import { DMListContext } from "../contexts/msgs";
 
-const NotificationDot = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      height="48"
-      width="48"
-      viewBox="0 0 48 48"
-      id="notification-dot"
-    >
-      <path d="m29.6 32.9-7.1-7.1V16h3v8.55l6.2 6.2Zm-7.1-21.4V7h3v4.5Zm14 14v-3H41v3ZM22.5 41v-4.5h3V41ZM7 25.5v-3h4.5v3ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Z" />
-    </svg>
-  );
+const NotificationDot = ({ notif }) => {
+  return <div id="notification-dot">{notif.length}</div>;
 };
 const NavSmBottom = () => {
   const [user, setUser] = useState(false);
   const [active, setActive] = useState("1");
+  const { socket } = useContext(SocketContext);
+  const { notif, updateNotif, roomNotif, updateRoomNotif } =
+    useContext(DMListContext);
   const location = useLocation();
   function updateActive() {
     switch (location.pathname) {
@@ -50,6 +46,19 @@ const NavSmBottom = () => {
     userLocal && setUser(userLocal);
     updateActive();
   }, [location.pathname]);
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log("receive_message will now update notif context");
+      updateNotif(data.from);
+    });
+    console.log("receive_message will now update notif context");
+
+    //rooms
+    socket.on("receive_room_message", (data) => {
+      console.log("room_message will now update notif context with", data);
+      updateRoomNotif(data._id);
+    });
+  }, [socket]);
 
   return (
     <>
@@ -66,7 +75,7 @@ const NavSmBottom = () => {
           >
             <path d="M0 36v-2.65q0-1.95 2.075-3.15T7.5 29q.6 0 1.175.025.575.025 1.125.125-.4.85-.6 1.75-.2.9-.2 1.9V36Zm12 0v-3.2q0-3.25 3.325-5.275Q18.65 25.5 24 25.5q5.4 0 8.7 2.025Q36 29.55 36 32.8V36Zm27 0v-3.2q0-1-.2-1.9-.2-.9-.6-1.75.55-.1 1.125-.125Q39.9 29 40.5 29q3.35 0 5.425 1.2Q48 31.4 48 33.35V36ZM7.5 27.5q-1.45 0-2.475-1.025Q4 25.45 4 24q0-1.45 1.025-2.475Q6.05 20.5 7.5 20.5q1.45 0 2.475 1.025Q11 22.55 11 24q0 1.45-1.025 2.475Q8.95 27.5 7.5 27.5Zm33 0q-1.45 0-2.475-1.025Q37 25.45 37 24q0-1.45 1.025-2.475Q39.05 20.5 40.5 20.5q1.45 0 2.475 1.025Q44 22.55 44 24q0 1.45-1.025 2.475Q41.95 27.5 40.5 27.5ZM24 24q-2.5 0-4.25-1.75T18 18q0-2.5 1.75-4.25T24 12q2.5 0 4.25 1.75T30 18q0 2.5-1.75 4.25T24 24Z" />
           </svg>
-          <NotificationDot />
+          {roomNotif.length ? <NotificationDot notif={roomNotif} /> : ""}
         </Link>
         <Link
           to="/my_dms"
@@ -80,7 +89,7 @@ const NavSmBottom = () => {
           >
             <path d="M16 28h16v-.95q0-2.1-2.125-3.25T24 22.65q-3.75 0-5.875 1.15T16 27.05Zm8-8.65q1.55 0 2.625-1.075T27.7 15.65q0-1.55-1.075-2.625T24 11.95q-1.55 0-2.625 1.075T20.3 15.65q0 1.55 1.075 2.625T24 19.35ZM4 44V7q0-1.15.9-2.075Q5.8 4 7 4h34q1.15 0 2.075.925Q44 5.85 44 7v26q0 1.15-.925 2.075Q42.15 36 41 36H12Z" />
           </svg>
-          <NotificationDot />
+          {notif.length ? <NotificationDot notif={notif} /> : ""}
         </Link>
         <Link
           to="/create_room"
@@ -127,7 +136,17 @@ const Nav = () => {
   const [user, setUser] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
   const [active, setActive] = useState("");
+  const { notif, updateNotif, roomNotif, updateRoomNotif } =
+    useContext(DMListContext);
   const location = useLocation();
+  const { socket } = useContext(SocketContext);
+  let userLocal = JSON.parse(sessionStorage.getItem("user"));
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      auth: userLocal.token,
+    },
+  };
   function updateActive() {
     switch (location.pathname) {
       case "/my_rooms":
@@ -148,11 +167,23 @@ const Nav = () => {
     }
   }
   useEffect(() => {
-    let userLocal = JSON.parse(sessionStorage.getItem("user"));
     userLocal && setUser(userLocal);
     updateActive();
   }, [location.pathname]);
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log("receive_message will now update notif context");
+      updateNotif(data.from);
+    });
+    console.log("receive_message will now update notif context");
 
+    //rooms
+    socket.on("receive_room_message", (data) => {
+      console.log("room_message will now update notif context with", data);
+      updateRoomNotif(data.room_id);
+    });
+  }, [socket]);
+  useEffect(() => {}, []);
   return (
     <div className="app-wrapper">
       <Alert />
@@ -185,7 +216,7 @@ const Nav = () => {
               <path d="M0 36v-2.65q0-1.95 2.075-3.15T7.5 29q.6 0 1.175.025.575.025 1.125.125-.4.85-.6 1.75-.2.9-.2 1.9V36Zm12 0v-3.2q0-3.25 3.325-5.275Q18.65 25.5 24 25.5q5.4 0 8.7 2.025Q36 29.55 36 32.8V36Zm27 0v-3.2q0-1-.2-1.9-.2-.9-.6-1.75.55-.1 1.125-.125Q39.9 29 40.5 29q3.35 0 5.425 1.2Q48 31.4 48 33.35V36ZM7.5 27.5q-1.45 0-2.475-1.025Q4 25.45 4 24q0-1.45 1.025-2.475Q6.05 20.5 7.5 20.5q1.45 0 2.475 1.025Q11 22.55 11 24q0 1.45-1.025 2.475Q8.95 27.5 7.5 27.5Zm33 0q-1.45 0-2.475-1.025Q37 25.45 37 24q0-1.45 1.025-2.475Q39.05 20.5 40.5 20.5q1.45 0 2.475 1.025Q44 22.55 44 24q0 1.45-1.025 2.475Q41.95 27.5 40.5 27.5ZM24 24q-2.5 0-4.25-1.75T18 18q0-2.5 1.75-4.25T24 12q2.5 0 4.25 1.75T30 18q0 2.5-1.75 4.25T24 24Z" />
             </svg>
             <span>Rooms</span>
-            <NotificationDot />
+            {roomNotif.length ? <NotificationDot notif={roomNotif} /> : ""}
           </Link>
           <Link
             to="/my_dms"
@@ -200,7 +231,7 @@ const Nav = () => {
               <path d="M16 28h16v-.95q0-2.1-2.125-3.25T24 22.65q-3.75 0-5.875 1.15T16 27.05Zm8-8.65q1.55 0 2.625-1.075T27.7 15.65q0-1.55-1.075-2.625T24 11.95q-1.55 0-2.625 1.075T20.3 15.65q0 1.55 1.075 2.625T24 19.35ZM4 44V7q0-1.15.9-2.075Q5.8 4 7 4h34q1.15 0 2.075.925Q44 5.85 44 7v26q0 1.15-.925 2.075Q42.15 36 41 36H12Z" />
             </svg>
             <span> Direct Messages</span>
-            <NotificationDot />
+            {notif.length ? <NotificationDot notif={notif} /> : ""}
           </Link>
           <Link
             to="/create_room"
@@ -238,7 +269,7 @@ const Nav = () => {
               crossOrigin="anonymous"
               className="bg-gray"
             />
-            <span>Profile</span>
+            <span>{user.username}</span>
           </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -61,10 +61,16 @@
 }
 #notification-dot {
   margin-left: auto !important;
-  width: 15px !important;
-  height: 10px !important;
-  fill: var(--red) !important;
-  align-self: flex-start !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--red);
+  color: var(--dark);
+  font-size: 12px;
 }
 .nav-end {
   background: var(--dark-purple);

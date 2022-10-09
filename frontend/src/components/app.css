@@ -57,6 +57,9 @@ img {
 .underline {
   text-decoration: underline;
 }
+.line-through {
+  text-decoration: line-through;
+}
 .pos-relative {
   position: relative;
 }
@@ -219,6 +222,7 @@ textarea {
   height: 100%;
   max-height: 80px;
   color: var(--light-gray);
+  margin-bottom: 20px;
 }
 .message-box-container {
   position: relative;
@@ -247,11 +251,23 @@ textarea {
 .pad-10 {
   padding: 10px;
 }
+.br-4 {
+  border-radius: 4px;
+}
+.br-8 {
+  border-radius: 8px;
+}
 .m-right-auto {
   margin-right: auto;
 }
 .m-left-auto {
   margin-left: auto;
+}
+.m-top-auto {
+  margin-top: auto;
+}
+.m-bottom-auto {
+  margin-bottom: auto;
 }
 .primary-button {
   height: 46px;

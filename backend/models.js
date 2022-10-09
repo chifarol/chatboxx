@@ -120,6 +120,10 @@ const DirectMSGSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  mark_read: {
+    type: Boolean,
+    default: false,
+  },
 });
 const RoomSchema = new Schema({
   name: {

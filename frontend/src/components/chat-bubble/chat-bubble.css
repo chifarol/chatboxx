@@ -37,10 +37,16 @@
   width: 20px;
   fill: var(--dark-gray);
 }
-.chat-bubble-message-info-status svg.received {
+.chat-bubble-message-info-status svg.read {
   fill: var(--green);
 }
-
+.chat-bubble-username {
+  color: var(--gray);
+  margin: 5px 0;
+  width: 149px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .chat-bubble-polygon {
   clip-path: polygon(100% 0, 0% 100%, 100% 100%);
   background-color: var(--purple);

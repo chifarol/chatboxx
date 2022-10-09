@@ -3,16 +3,6 @@ import { Link } from "react-router-dom";
 import { logOut } from "../auth/auth";
 import "./popup.css";
 
-export const RoomPopUp = ({ room_id }) => {
-  return (
-    <div className="pop-up-room-container bg-gray-blue w400">
-      <Link className="pop-up-item pointer" to={`/room_details/${room_id}`}>
-        Details
-      </Link>
-      <span className="pop-up-item red pointer">Leave room</span>
-    </div>
-  );
-};
 export const NavProfilePopUp = () => {
   return (
     <div className="pop-up-nav-container bg-gray-blue f16 w500">

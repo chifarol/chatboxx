@@ -142,11 +142,12 @@ apiRoutes.post("/dm", auth, async (req, res) => {
     from: mainUsername,
     to: target_username,
     body: body,
+    date: Date.now(),
   });
   newDM
     .save()
     .then((save_res) => {
-      updateDMActivity(mainUserObj, targetUserObj, save_res.body);
+      updateDMActivity(mainUserObj, targetUserObj);
       res.json({ DmMsg: save_res });
     })
     .catch((e) => {
@@ -251,6 +252,7 @@ apiRoutes.post("/room", auth, async (req, res) => {
     let newRoomMSG = new RoomMSG({
       author: authorObj,
       body,
+      date: Date.now(),
     });
     Room.updateOne(
       { _id: room_id },
@@ -332,6 +334,7 @@ apiRoutes.get("/add_member", auth, async (req, res) => {
           author: targetRoom.host,
           body: `${req.session.username} added ${target_username}`,
           type: "info",
+          date: Date.now(),
         });
         targetRoom.msgs.push(newRoomMsg);
         updateRoomActivity(targetObj, targetRoom._id);
@@ -375,6 +378,7 @@ apiRoutes.get("/join_room", auth, async (req, res) => {
         author: targetRoom.host,
         body: `${targetUsername} left`,
         type: "info",
+        date: Date.now(),
       });
       targetRoom.msgs.push(newRoomMsg);
       if (targetRoom.members.length > 0) {
@@ -399,6 +403,7 @@ apiRoutes.get("/join_room", auth, async (req, res) => {
         author: targetRoom.host,
         body: `${targetUsername} joined`,
         type: "info",
+        date: Date.now(),
       });
       targetRoom.msgs.push(newRoomMsg);
       targetRoom.save();
@@ -434,6 +439,7 @@ apiRoutes.get("/remove_member", auth, async (req, res) => {
           author: targetRoom.host,
           body: `${targetRoom.host.username} removed ${target_username}`,
           type: "info",
+          date: Date.now(),
         });
         targetRoom.msgs.push(newRoomMsg);
         if (targetRoom.members.length > 0) {

@@ -6,7 +6,7 @@ import "./chat-bubble.css";
 import AlertContext from "../contexts/alert";
 import { Spinner } from "../loading-spinner/spinner";
 
-export const MsgState = ({ state }) =>
+export const MsgState = ({ state = "" }) =>
   state === "pending" ? (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ export const MsgState = ({ state }) =>
       height="48"
       width="48"
       viewBox="0 0 48 48"
-      className={state === "read" ? "received" : ""}
+      className={state === "read" ? "read" : ""}
     >
       <path d="M21.05 33.1 35.2 18.95l-2.3-2.25-11.85 11.85-6-6-2.25 2.25ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 24q0-4.15 1.575-7.8 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24 4q4.15 0 7.8 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Z" />
     </svg>
@@ -42,7 +42,7 @@ const ChatBubble = ({ msg }) => {
   return (
     <>
       {!msg.active ? (
-        <ChatDeleted />
+        <ChatDeletedGroup msg={msg} />
       ) : (
         <div className="chat-bubble-container">
           <Link
@@ -61,6 +61,9 @@ const ChatBubble = ({ msg }) => {
 
             <div className="chat-bubble-polygon"></div>
           </div>
+          <span className="chat-bubble-username f12">
+            {msg.author.username}
+          </span>
         </div>
       )}
     </>
@@ -88,6 +91,18 @@ export const ChatBubbleDM = ({ msg }) => {
     </>
   );
 };
+export const ChatDeletedGroup = ({ msg }) => (
+  <div className="chat-bubble-container">
+    <Link className="chat-bubble-image" to={`/profile/${msg.author.username}`}>
+      <img src={msg.author.picture} crossOrigin="anonymous" />
+    </Link>
+    <div className="chat-bubble-message bg-purple pos-relative">
+      <div className="gray f12 italic line-through w300">deleted by author</div>
+      <div className="chat-bubble-polygon"></div>
+    </div>
+    <span className="chat-bubble-username f12">{msg.author.username}</span>
+  </div>
+);
 export const ChatDeleted = ({ msg }) => (
   <div className="chat-bubble-deleted-container bg-purple gray f12 italic w300 pos-relative">
     <span>deleted by author</span>
@@ -101,7 +116,7 @@ export const ChatDeletedMe = ({ msg }) => (
   </div>
 );
 
-export const ChatBubbleMe = ({ isRoom = false, id, msg }) => {
+export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -213,7 +228,7 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg }) => {
                 {getDateTimeString(msg.date, "HrMin")}
               </span>
               <span className="chat-bubble-message-info-status">
-                <MsgState state="" />
+                <MsgState state={state} />
               </span>
             </div>
 

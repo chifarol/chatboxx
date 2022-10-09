@@ -80,6 +80,15 @@
   .room-middle {
     padding: 25px !important;
   }
+  .room-room-name {
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chat-bubble-message {
+    max-width: 150px;
+  }
   .chat-bubble-me-container,
   .chat-bubble-group-container {
     max-width: 288px !important;

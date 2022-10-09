@@ -277,7 +277,7 @@ const Participants = ({ room, currentUser, setRoom }) => {
   };
   return (
     <div className="room-participants-container">
-      {room.host.username === currentUser && currentUser !== user.username && (
+      {room.host.username === currentUser && (
         <div className="room-participants-item">
           <input
             className=" room-participant-add bg-gray-blue pad-10 m-left-auto light-gray"
@@ -300,6 +300,9 @@ const Participants = ({ room, currentUser, setRoom }) => {
           <Link to={`/profile/${user.username}`}>
             <span>{user.username}</span>
           </Link>
+          {currentUser === user.username && (
+            <span className="m-bottom-auto w300 f12 pad-10 green">you</span>
+          )}
           {room.host.username === currentUser && currentUser !== user.username && (
             <span
               className="room-participants-item-cta pointer bg-red dark pos-relative"
@@ -311,11 +314,6 @@ const Participants = ({ room, currentUser, setRoom }) => {
           {room.host.username === user.username && (
             <span className="no-margin secondary-button w300 f12 m-left-auto">
               Host
-            </span>
-          )}
-          {currentUser === user.username && (
-            <span className="no-margin secondary-button w300 f12 m-left-auto">
-              you
             </span>
           )}
         </div>

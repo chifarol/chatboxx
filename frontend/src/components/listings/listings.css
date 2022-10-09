@@ -54,6 +54,7 @@
 .list-item-group-two {
   margin: 0 12px;
   max-width: 100%;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 .list-item-group-two-chat {
