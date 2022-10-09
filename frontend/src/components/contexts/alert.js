@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 // initialize alert context for flash messages
 export const AlertContext = createContext();
 
-// the provider for alert context
+// the provider for alert context (flash messages)
 export const AlertContextProvider = ({ children }) => {
   // initial state
   const initialState = {

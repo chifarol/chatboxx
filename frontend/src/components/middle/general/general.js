@@ -22,6 +22,16 @@ export const BackButton = () => {
     </span>
   );
 };
+/**
+ * renders the following screen based on parameters:
+ *Create Rroom
+ *Settings
+ *My DMs List
+ *My Rooms List
+ *Search page
+ * @param string type type of component to render.
+ * @param string title Components title.
+ */
 const General = ({ type, title }) => {
   return (
     <div className="general-container">

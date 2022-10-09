@@ -1,6 +1,10 @@
 import React from "react";
 import "./spinner.css";
 
+/**
+ * a spinning circle to show loading state
+ * @return a spinning circle to show loading state
+ */
 export const Spinner = () => {
   return (
     <>

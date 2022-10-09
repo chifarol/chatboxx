@@ -34,6 +34,11 @@ const Settings = () => {
       });
   }, []);
 
+  /**
+   *uploads user picture to cloudinary and updates user info in backend
+   * @param string pictureUrl file path of new profile pictur.
+   * @return string (hex color)
+   */
   function uploadUser(pictureUrl = "") {
     const body = {};
     if (bio.current.value) {

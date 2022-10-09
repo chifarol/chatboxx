@@ -5,68 +5,59 @@ import { Spinner } from "../../loading-spinner/spinner";
 import { AlertContext } from "../../contexts/alert";
 import axios from "axios";
 
-export const UpdateRoom = () => {
-  return (
-    <div className="create-room-container">
-      <div className="create-room-form">
-        <div className="create-room-field">
-          <span className="create-room-label">TITLE</span>
-          <input type="text" />
-        </div>
-        <div className="create-room-field">
-          <span className="create-room-label">TOPIC</span>
-          <input type="text" />
-          <span className="create-room-extra f12 pointer w300">
-            Choose from exisiting topics
-          </span>
-        </div>
-        <div className="create-room-field">
-          <span className="create-room-label">DESCRIPTION</span>
-          <textarea></textarea>
-        </div>
-        <div className="create-room-field">
-          <span className="create-room-label">ROOM PICTURE</span>
-          <input type="file" id="image-input" className="hide" />
-          <div className="pos-relative">
-            <input type="text" />
-            <label
-              htmlFor="image-input"
-              className="create-room-button pos-absolute pointer"
-            >
-              Change Picture
-            </label>
-          </div>
-        </div>
-        <div className="create-room-submit pointer">Update</div>
-      </div>
-    </div>
-  );
-};
+/**
+ * Dform for creating room
+ * @return creates room and redirects to the new room if successful
+ */
 const CreateRoom = () => {
+  // room title/name
   const titleRef = useRef(null);
+  // comma seperated string for room topics
   const topicRef = useRef(null);
+  // room description
   const descRef = useRef(null);
+  // flash messages
   const { alert, setAlert } = useContext(AlertContext);
   const [loading, setLoading] = useState(false);
+  // for invalid topic formats
   const [topicError, setTopicError] = useState("");
+
+  /**
+   * validates topics input to ensure it containes only a-z, A-Z ,hyphen(-) and comma(,)
+   * @param string string to validate
+   * @return true or false
+   */
   function checkTopic(string) {
+    // test against regex, only a-z, A-Z ,hyphen(-) and comma(,) is allowed
     if (/([^a-zA-Z-,]+)/g.test(string)) {
-      console.log("invalid topic");
-      setTopicError("only alphabets(a-z) and underscores(_) allowed");
+      setTopicError(
+        "only alphabets(a-z), hyphens(-) and commas(,) are allowed"
+      );
       return false;
     } else {
-      console.log("valid topic");
       setTopicError("");
       return true;
     }
   }
+
+  /**
+   * converts comma-seperated strings to array
+   * @param string string
+   * @return array
+   */
   function arrayfy(string) {
     return string.split(",");
   }
+
+  /**
+   *creates room and redirects to the new room if successful
+   */
   function createRoom() {
+    // validate "topics" input
     if (!checkTopic(topicRef.current.value)) {
       return;
     }
+    // trigger loading state
     setLoading(true);
     let userLocal = JSON.parse(sessionStorage.getItem("user"));
     let topicArray = arrayfy(topicRef.current.value);
@@ -76,7 +67,9 @@ const CreateRoom = () => {
         auth: userLocal.token,
       },
     };
+    // body object for api
     const body = {};
+    // if "title" input is not empty
     if (titleRef.current.value) {
       body.name = titleRef.current.value;
     }
@@ -86,22 +79,26 @@ const CreateRoom = () => {
     if (descRef.current.value) {
       body.description = descRef.current.value;
     }
-    console.log(body);
+
+    // create room api call
     axios
       .post("/api/create_room/", body, config)
       .then((res) => {
-        console.log(res.data);
+        // turn off loading state
         setLoading(false);
+        // trigger flash message
         setAlert({
           ...alert,
           type: "success",
           active: true,
           text: "Room successfully created, redirecting to room",
         });
+        //redirect to new room
         window.location.pathname = `/room/${res.data.newRoom._id}`;
       })
       .catch((e) => {
         console.log(e);
+        // turn off loading state
         setLoading(false);
       });
   }
@@ -121,9 +118,6 @@ const CreateRoom = () => {
             onInput={(e) => checkTopic(e.target.value)}
             required
           />
-          <span className="create-room-extra underline f12 pointer w300">
-            Choose from exisiting topics
-          </span>
         </div>
         <div className="create-room-field">
           <span className="create-room-label">DESCRIPTION</span>

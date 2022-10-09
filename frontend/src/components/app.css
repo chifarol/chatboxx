@@ -222,7 +222,6 @@ textarea {
   height: 100%;
   max-height: 80px;
   color: var(--light-gray);
-  margin-bottom: 20px;
 }
 .message-box-container {
   position: relative;
@@ -303,7 +302,7 @@ textarea {
   width: 20px !important;
   height: 20px !important;
   fill: var(--light-gray) !important;
-  margin-right: 30px !important;
+  margin-right: 15px !important;
   display: block !important;
 }
 .full-illustration-container {

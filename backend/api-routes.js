@@ -276,7 +276,7 @@ apiRoutes.post("/room", auth, async (req, res) => {
   }
 });
 // delete messages
-apiRoutes.post("/room_message", auth, async (req, res) => {
+apiRoutes.post("/delete_room_message", auth, async (req, res) => {
   const { msg_id, room_id } = req.body;
   const mainUsername = req.session.username;
   Room.updateOne(

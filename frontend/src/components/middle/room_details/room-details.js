@@ -5,16 +5,25 @@ import { AlertContext } from "../../contexts/alert";
 import axios from "axios";
 import "./room-details.css";
 import { getFilePath, imageUpload } from "../../utils";
+import { BackButton } from "../general/general";
 
 const UpdateRoomInfo = ({ room }) => {
+  // room name ref
   let name = useRef(null);
+  // room topics ref
   let topics = useRef(null);
+  // room description ref
   let description = useRef(null);
   const [loading, setLoading] = useState(false);
+  // temporary image file object for room picture
   const [tempPicture, setTempPicture] = useState("");
+  // temporary room picture image file path(src) for display
   const [displayImg, setDisplayImg] = useState("");
+  // for errors in validating topics input
   const [topicError, setTopicError] = useState("");
+  // flash messages
   const { setAlert } = useContext(AlertContext);
+  // main user object
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
   const config = {
     headers: {
@@ -22,27 +31,37 @@ const UpdateRoomInfo = ({ room }) => {
       auth: userLocal.token,
     },
   };
+  /**
+   * validates topics input to ensure it containes only a-z, A-Z ,hyphen(-) and comma(,)
+   * @param string string to validate
+   * @return true or false
+   */
   function checkTopic(string) {
     if (/([^a-zA-Z-,]+)/g.test(string)) {
-      console.log("invalid topic");
       setTopicError("only alphabets(a-z) and underscores(_) allowed");
       return false;
     } else {
-      console.log("valid topic");
       setTopicError("");
       return true;
     }
   }
+  /**
+   * converts comma-seperated strings to array
+   * @param string string
+   * @return array
+   */
   function arrayfy(string) {
     return string.split(",");
   }
-  const updateRoom = () => {
+  // triggers room update depending on whether room picture needs uploading too
+  const updateRoomFxn = () => {
     setLoading(true);
     if (!checkTopic(topics.current.value)) {
       setLoading(false);
       return;
     }
     if (tempPicture.name) {
+      // image upload to cloudinary, returns url string
       imageUpload(tempPicture, "room", room._id)
         .then((newRoomPicture) => {
           updateRoom(newRoomPicture);
@@ -59,8 +78,11 @@ const UpdateRoomInfo = ({ room }) => {
     } else {
       updateRoom();
     }
+    /**
+     * updates room info via api
+     * @param string newRoomPicture new room pictur url.
+     */
     function updateRoom(newRoomPicture = "") {
-      console.log("newRoomPicture", newRoomPicture);
       axios
         .post(
           "/api/update_room",
@@ -78,7 +100,8 @@ const UpdateRoomInfo = ({ room }) => {
           config
         )
         .then((res) => {
-          setLoading(false);
+          // turn off loading state
+          setLoading(false); // trigger flash message
           setAlert({
             text: "room updated successfully",
             active: true,
@@ -87,8 +110,10 @@ const UpdateRoomInfo = ({ room }) => {
           window.location.reload();
         })
         .catch((e) => {
-          console.log(e.response.data, room._id);
+          console.log(e.response.data);
+          // turn off loading state
           setLoading(false);
+          // trigger flash message
           setAlert({
             text: "Something went wrong",
             active: true,
@@ -149,7 +174,7 @@ const UpdateRoomInfo = ({ room }) => {
         </div>
         <div
           className="settings-submit pointer pos-relative"
-          onClick={updateRoom}
+          onClick={updateRoomFxn}
         >
           {loading && <Spinner />}
           Update
@@ -159,8 +184,10 @@ const UpdateRoomInfo = ({ room }) => {
   );
 };
 const RoomInfo = ({ room, currentUser }) => {
+  // for copying room link
   const [copyText, setCopyText] = useState("Copy Room Link");
   useEffect(() => {
+    // reset copy link text after click/copy
     setTimeout(() => {
       setCopyText("Copy Room Link");
     }, 5000);
@@ -168,46 +195,58 @@ const RoomInfo = ({ room, currentUser }) => {
 
   return (
     <>
-      {room.host && room.host.username === currentUser ? (
-        <UpdateRoomInfo room={room} />
-      ) : (
-        <div className="room-info-container">
-          <div className="room-details-one">
-            <img src={room.picture} crossOrigin="anonymous" />
+      {
+        // if main user is the host render room update form
+        room.host && room.host.username === currentUser ? (
+          <UpdateRoomInfo room={room} />
+        ) : (
+          // else render bare room info
+          <div className="room-info-container">
+            <div className="room-details-one">
+              <img src={room.picture} crossOrigin="anonymous" />
+            </div>
+            <p className="room-info-item w300">
+              <span>Room Name:</span>
+              {room.name}
+            </p>
+            <p className="room-info-item w300">
+              <span>Topics:</span>
+              {room.topics && room.topics.toString()}
+            </p>
+            <p className="room-info-item w300">
+              <span>Description:</span>
+              {room.description}
+            </p>
+            <span
+              className="secondary-button pointer room-detail-bouncy-cta"
+              onClick={() => {
+                // copy room link to clipboard
+                navigator.clipboard.writeText(
+                  `${window.location.host}/room/${room._id}`
+                );
+                setCopyText("Copied");
+              }}
+            >
+              {copyText}
+            </span>
           </div>
-          <p className="room-info-item w300">
-            <span>Room Name:</span>
-            {room.name}
-          </p>
-          <p className="room-info-item w300">
-            <span>Topics:</span>
-            {room.topics && room.topics.toString()}
-          </p>
-          <p className="room-info-item w300">
-            <span>Description:</span>
-            {room.description}
-          </p>
-          <span
-            className="secondary-button pointer room-detail-bouncy-cta"
-            onClick={() => {
-              navigator.clipboard.writeText(
-                `${window.location.host}/room/${room._id}`
-              );
-              setCopyText("Copied");
-            }}
-          >
-            {copyText}
-          </span>
-        </div>
-      )}
+        )
+      }
     </>
   );
 };
+// for participants tab
 const Participants = ({ room, currentUser, setRoom }) => {
+  // for flash messages
   const { setAlert } = useContext(AlertContext);
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState([]);
+  // for adding/removing users to room via username
+  const [username, setUsername] = useState("");
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
+
+  /**
+   * adds user to room (for hosts only)
+   */
   const addUser = () => {
     setLoading(true);
     const config = {
@@ -216,30 +255,40 @@ const Participants = ({ room, currentUser, setRoom }) => {
         auth: userLocal.token,
       },
     };
+    // if username is not empty
     username &&
       axios
         .get(`/api/add_member?room_id=${room._id}&username=${username}`, config)
         .then((res) => {
+          // triggger flash message
           setAlert({
             text: "user added successfully",
             active: true,
             type: "success",
           });
+          // reload to reflect newly added user
           window.location.reload();
+          // turn off loading spinner
           setLoading(false);
         })
         .catch((e) => {
+          // triggger flash message
           setAlert({
             text: `${e.response.data.status}` || "Something went wrong",
             active: true,
             type: "error",
           });
+          // turn off loading spinner
           setLoading(false);
           console.log(e.response.data.status);
         });
   };
+  /**
+   * removes user to room (for hosts only)
+   */
   const removeUser = (username) => {
-    setLoading(username);
+    // trigger loading spinner
+    setLoading(true);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -253,45 +302,53 @@ const Participants = ({ room, currentUser, setRoom }) => {
           config
         )
         .then((res) => {
+          // trigger flash message
           setAlert({
             text: "removed " + username,
             active: true,
             type: "success",
           });
+          // get new memebrs array excluding removed user
           let newMembers = room.members.filter(
             (user) => user.username !== username
           );
           room.members = newMembers;
+          // update room object state
           setRoom(room);
           setLoading(false);
         })
         .catch((e) => {
+          // trigger flash message
           setAlert({
             text: `${e.response.data.status}` || "Something went wrong",
             active: true,
             type: "error",
           });
+          // turn off loading spinner
           setLoading(false);
           console.log(e.response.data.status);
         });
   };
   return (
     <div className="room-participants-container">
-      {room.host.username === currentUser && (
-        <div className="room-participants-item">
-          <input
-            className=" room-participant-add bg-gray-blue pad-10 m-left-auto light-gray"
-            placeholder="add participant by username"
-            onInput={(e) => setUsername(e.target.value)}
-          ></input>
-          <span
-            className="primary-button m-left-auto pos-relative pointer"
-            onClick={addUser}
-          >
-            Add {loading == true && <Spinner />}
-          </span>
-        </div>
-      )}
+      {
+        //only hosts can add users
+        room.host.username === currentUser && (
+          <div className="room-participants-item">
+            <input
+              className=" room-participant-add bg-gray-blue pad-10 m-left-auto light-gray"
+              placeholder="add participant by username"
+              onInput={(e) => setUsername(e.target.value)}
+            ></input>
+            <span
+              className="primary-button m-left-auto pos-relative pointer"
+              onClick={addUser}
+            >
+              Add {loading == true && <Spinner />}
+            </span>
+          </div>
+        )
+      }
       {room.members.map((user) => (
         <div className="room-participants-item" key={user._id}>
           <Link to={`/profile/${user.username}`}>
@@ -300,22 +357,31 @@ const Participants = ({ room, currentUser, setRoom }) => {
           <Link to={`/profile/${user.username}`}>
             <span>{user.username}</span>
           </Link>
-          {currentUser === user.username && (
-            <span className="m-bottom-auto w300 f12 pad-10 green">you</span>
-          )}
-          {room.host.username === currentUser && currentUser !== user.username && (
-            <span
-              className="room-participants-item-cta pointer bg-red dark pos-relative"
-              onClick={() => removeUser(user.username)}
-            >
-              Remove {loading === user.username && <Spinner />}
-            </span>
-          )}
-          {room.host.username === user.username && (
-            <span className="no-margin secondary-button w300 f12 m-left-auto">
-              Host
-            </span>
-          )}
+          {
+            //signify your account
+            currentUser === user.username && (
+              <span className="m-bottom-auto w300 f12 pad-10 green">you</span>
+            )
+          }
+          {
+            //omly hosts can remove users
+            room.host.username === currentUser && currentUser !== user.username && (
+              <span
+                className="room-participants-item-cta pointer bg-red dark pos-relative"
+                onClick={() => removeUser(user.username)}
+              >
+                Remove {loading === user.username && <Spinner />}
+              </span>
+            )
+          }
+          {
+            //signify room host
+            room.host.username === user.username && (
+              <span className="no-margin secondary-button w300 f12 m-left-auto">
+                Host
+              </span>
+            )
+          }
         </div>
       ))}
     </div>
@@ -323,11 +389,15 @@ const Participants = ({ room, currentUser, setRoom }) => {
 };
 
 const RoomDetails = () => {
+  // room info & participants tab state
   const [tab, setTab] = useState(true);
+  // room_id from params
   const { roomIdRoute } = useParams();
+  // room object state
   const [room, setRoom] = useState([]);
-  const [error, setError] = useState([]);
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
+
+  // fetch room details on mount
   useEffect(() => {
     const config = {
       headers: {
@@ -335,11 +405,10 @@ const RoomDetails = () => {
         auth: userLocal.token,
       },
     };
+    // fetch room api
     axios
       .get(`/api/room?id=${roomIdRoute}`, config)
       .then((res) => {
-        console.log("roomIdRoute", roomIdRoute);
-        console.log("room object", res.data);
         setRoom(res.data.room);
       })
       .catch((e) => {
@@ -352,7 +421,10 @@ const RoomDetails = () => {
 
   return (
     <div className="general-container">
-      <div className="general-top uppercase">ROOM DETAILS</div>
+      <div className="general-top uppercase">
+        <BackButton />
+        ROOM DETAILS
+      </div>
       <div className="general-body scrollbar">
         <div className="room-details-container">
           <div className="room-details-two gray">

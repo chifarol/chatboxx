@@ -105,8 +105,8 @@ export function getDateTimeString(date, type) {
   let year = date.getFullYear(); //get $-digit Year
   let month = date.getMonth() + 1; // get month 0-11
   let day = date.getDate(); // get day 1-31
-  let hour = date.getHours(); // get 24 hour
-  let minutes = date.getMinutes(); // get day 1-31
+  let hour = String(date.getHours()).padStart(2, "0"); // get 24 hour
+  let minutes = String(date.getMinutes()).padStart(2, "0"); // get day 1-31
   switch (type) {
     case "HrMin":
       return `${hour}:${minutes}`;
@@ -124,38 +124,3 @@ export function getDateTimeString(date, type) {
  * @param {string} obj.type type of info/tweets (profile,tweets,tweets & replies,media,likes)
  * @param {array} obj.list array of user's tweets
  */
-// export function setUsersCache(username, { type, list }) {
-//   usersCache = JSON.parse(sessionStorage.getItem("users"));
-//   // get lowecase version of type ('profile','tweets','tweetsreplies','people','media','likes')
-//   let lowerCaseType = type.toLocaleLowerCase();
-//   // if user info is already existing
-//   if (
-//     usersCache.some((e) => e.username.toLowerCase() === username.toLowerCase())
-//   ) {
-//     let index = usersCache.findIndex(
-//       (e) => e.username.toLowerCase() === username.toLowerCase()
-//     );
-//     // modify cache object e.g usersCache[index]['top']
-//     usersCache[index][lowerCaseType] = list;
-//     // update cache in localstorage
-//     sessionStorage.setItem("users", JSON.stringify(usersCache));
-//   }
-//   // if user info is not already existing
-//   else {
-//     // new cache object
-//     let newObj = {
-//       username: username,
-//       profile: [],
-//       tweets: [],
-//       tweetsreplies: [],
-//       media: [],
-//       likes: [],
-//     };
-//     // modify cache object e.g newObj['top']
-//     newObj[lowerCaseType] = list;
-//     // add new cache object to user cache array
-//     usersCache.push(newObj);
-//     // update user cache in localstorage
-//     sessionStorage.setItem("users", JSON.stringify(usersCache));
-//   }
-// }

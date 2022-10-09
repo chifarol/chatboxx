@@ -5,12 +5,20 @@ import { BackButton } from "../general/general";
 import { Spinner } from "../../loading-spinner/spinner";
 import "./profile.css";
 
+/**
+ * component to render user profile page
+ */
 const Profile = () => {
+  // username string after /profile/<username>
   const { usernameRoute } = useParams();
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
   let [loading, setLoading] = useState(true);
+  // for user not found error
   let [invalidUser, setInvalidUser] = useState(false);
+  // for user object
   let [user, setUser] = useState({});
+
+  // on mount, fetch user data
   useEffect(() => {
     const config = {
       headers: {
@@ -18,6 +26,7 @@ const Profile = () => {
         auth: userLocal.token,
       },
     };
+    // api to fetch user data
     axios
       .get(`/api/user?username=${usernameRoute}`, config)
       .then((res) => {
