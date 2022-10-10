@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./backend/index.js",
     "watch": "nodemon ./backend/index.js",
     "dev": "webpack --mode development --watch --entry ./frontend/src/index.js --output-path ./backend/public",
     "build": "webpack --mode  production  --watch --entry ./frontend/src/index.js --output-path ./backend/public"
