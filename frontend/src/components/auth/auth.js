@@ -173,7 +173,7 @@ export const Register = () => {
   const [authError, setAuthError] = useState("");
   // log in processing loading state
   const [loading, setLoading] = useState(false);
-  const [inputrror, setInputError] = useState("");
+  const [inputError, setInputError] = useState("");
   // for flash messages
   const { alert, setAlert } = useContext(AlertContext);
   // for "username or email" input field
@@ -204,7 +204,7 @@ export const Register = () => {
     setAuthError("");
     setLoading(true);
     // check if username input value is valid
-    if (checkUsername(username.current.value)) {
+    if (!checkUsername(username.current.value)) {
       setLoading(false);
       return;
     }

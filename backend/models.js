@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Can't be blank"],
+    select: false,
   },
   picture: {
     type: String,
@@ -50,13 +51,8 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
 });
-UserSchema.methods.toJSON = function () {
-  const user = this;
-  const userObject = user.toObject();
-  delete userObject.password;
-  return userObject;
-};
 
+// add static method to user Model for authenticating by email or username
 UserSchema.statics.findByCredentials = async function (
   usernameOrEmail,
   password
@@ -74,10 +70,6 @@ UserSchema.statics.findByCredentials = async function (
   return user;
 };
 const RoomMSGSchema = new Schema({
-  // room_id: {
-  //   type: String,
-  //   required: true,
-  // },
   author: {
     type: UserSchema,
     required: true,
