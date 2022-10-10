@@ -7,12 +7,13 @@ export const socket = io.connect("http://localhost:4001", {
   transports: ["websocket"],
   upgrade: false,
 });
-
-const userLocal = JSON.parse(sessionStorage.getItem("user"));
 export const SocketContext = createContext();
 export const SocketContextProvider = ({ children }) => {
   let socketId;
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
+  if (!userLocal.token) {
+    return;
+  }
   const config = {
     headers: {
       "Content-Type": "application/json",

@@ -14,7 +14,8 @@ const { normalRoutes } = require("./normal-routes");
 // router for /api/....
 const { apiRoutes } = require("./api-routes");
 const { updateDMActivity, updateRoomActivity } = require("./utils");
-const { CLOUDINARY_NAME } = process.env;
+const { CLOUDINARY_NAME, PORT } = process.env;
+const port = PORT || 4000;
 const { User } = require("./models.js");
 require("./connection");
 const { Server } = require("socket.io");
@@ -23,7 +24,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:4000",
+    origin: port,
     methods: ["GET", "POST"],
   },
 });
@@ -158,6 +159,6 @@ app.use("/api", apiRoutes);
 // for none API routes
 app.use("", normalRoutes);
 
-app.listen(4000, "localhost", () => {
-  console.log("Listening on port 4000");
+app.listen(port, "localhost", () => {
+  console.log("Listening on port ", port);
 });

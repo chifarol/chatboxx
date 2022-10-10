@@ -11,6 +11,9 @@ export const DMListContextProvider = ({ children }) => {
   const [notif, setNotif] = useState([]);
   const [roomNotif, setRoomNotif] = useState([]);
   // api header config
+  if (!userLocal.token) {
+    return;
+  }
   const config = {
     headers: {
       "Content-Type": "application/json",
