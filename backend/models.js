@@ -27,7 +27,6 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Can't be blank"],
-    select: false,
   },
   picture: {
     type: String,
