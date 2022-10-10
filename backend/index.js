@@ -14,7 +14,7 @@ const { normalRoutes } = require("./normal-routes");
 // router for /api/....
 const { apiRoutes } = require("./api-routes");
 const { updateDMActivity, updateRoomActivity } = require("./utils");
-const { CLOUDINARY_NAME, PORT } = process.env;
+const { CLOUDINARY_NAME, PORT, PORT_IO } = process.env;
 const port = PORT || 4000;
 const { User } = require("./models.js");
 require("./connection");
@@ -110,9 +110,9 @@ io.on("connection", (socket) => {
   });
 });
 
-// server.listen(4001, () => {
-//   console.log("socket IO SERVER IS RUNNING");
-// });
+server.listen(PORT_IO, () => {
+  console.log("socket IO SERVER IS RUNNING");
+});
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -129,8 +129,10 @@ CSP["script-src"] = ["'self'", "'unsafe-inline'", "'unsafe-eval'"];
 CSP["connect-src"] = [
   "'self'",
   `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
-  `http://localhost:4001`,
-  `ws://localhost:4001`,
+  `http://localhost:${PORT_IO}`,
+  `https://studdybuddies.onrender.com:${PORT_IO}`,
+  `ws://localhost:${PORT_IO}`,
+  `ws://studdybuddies.onrender.com:${PORT_IO}`,
 ];
 app.use(
   helmet({
