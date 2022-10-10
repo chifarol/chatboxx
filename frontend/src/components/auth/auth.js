@@ -86,9 +86,13 @@ export const LogIn = () => {
           }, 2000);
         })
         .catch((e) => {
-          console.log(e);
+          console.log(e.response);
           setLoading(false);
-          setAuthError("Invalid credentials");
+          if (e.response.status === 401) {
+            setAuthError("Invalid credentials");
+          } else {
+            setAuthError("Sorry, something went wrong");
+          }
         });
     }
   };
