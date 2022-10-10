@@ -110,9 +110,9 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(4001, () => {
-  console.log("socket IO SERVER IS RUNNING");
-});
+// server.listen(4001, () => {
+//   console.log("socket IO SERVER IS RUNNING");
+// });
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
