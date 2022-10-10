@@ -1,10 +1,11 @@
 {
-  "name": "shoppingify",
+  "name": "chatboxx",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "initialize": "npm install",
     "start": "node ./backend/index.js",
     "watch": "nodemon ./backend/index.js",
     "dev": "webpack --mode development --watch --entry ./frontend/src/index.js --output-path ./backend/public",
