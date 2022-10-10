@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import axios from "axios";
 // const { SOCKET_URL } = process.env;
 
-export const socket = io.connect("http://localhost:4001", {
+export const socket = io.connect("https://chatboxx.onrender.com:4001", {
   transports: ["websocket"],
   upgrade: false,
 });

@@ -90,7 +90,7 @@ export const LogIn = () => {
     // turn on loading state
     setLoading(true);
     // get cached main user object
-    let userLocal = JSON.parse(sessionStorage.getItem("user"));
+    let userLocal = JSON.parse(sessionStorage.getItem("user")) || {};
     // check whether either input fields are empty
     if (!usernameOrEmail.current.value || !password.current.value) {
       setLoading(false);
