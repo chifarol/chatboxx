@@ -133,6 +133,7 @@ CSP["connect-src"] = [
   `https://chatboxx.onrender.com:${PORT_IO}`,
   `ws://localhost:${PORT_IO}`,
   `ws://chatboxx.onrender.com:${PORT_IO}`,
+  `wss://chatboxx.onrender.com:${PORT_IO}`,
 ];
 app.use(
   helmet({

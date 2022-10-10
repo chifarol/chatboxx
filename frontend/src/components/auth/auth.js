@@ -83,6 +83,7 @@ export const LogIn = () => {
   const usernameOrEmail = useRef(null);
   // for "password" input field
   const password = useRef(null);
+
   // fxn to process login
   const loginHandler = () => {
     // reset authentication error message
