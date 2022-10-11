@@ -1,6 +1,7 @@
 .app-wrapper {
   display: flex;
   background-color: var(--gray-blue);
+  min-height: 100vh;
 }
 
 .nav-container {
