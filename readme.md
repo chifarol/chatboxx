@@ -19,7 +19,7 @@
 
 ### 🏠 [Homepage](https://chatboxx.onrender.com/)
 
-### ✨ [Demo](https://chatboxx.onrender.com/)
+### ✨ [Live Site](https://chatboxx.onrender.com/)
 
 ## Install
 
@@ -43,9 +43,9 @@ npm run test
 
 👤 **Ilodigwe Chinaza**
 
-* Twitter: [@ilodigwechinaza](https://twitter.com/ilodigwechinaza)
-* Github: [@chifarol](https://github.com/chifarol)
-* LinkedIn: [@Ilodigwe Chinaza](https://linkedin.com/in/Ilodigwe Chinaza)
+- Twitter: [@ilodigwechinaza](https://twitter.com/ilodigwechinaza)
+- Github: [@chifarol](https://github.com/chifarol)
+- LinkedIn: [@Ilodigwe Chinaza](https://linkedin.com/in/Ilodigwe Chinaza)
 
 ## Show your support
 
@@ -56,5 +56,6 @@ Give a ⭐️ if this project helped you!
 Copyright © 2022 [Ilodigwe Chinaza](https://github.com/chifarol).<br />
 This project is [ISC](https://github.com/chifarol/chatboxx/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

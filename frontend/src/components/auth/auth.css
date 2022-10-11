@@ -60,7 +60,6 @@
 }
 .auth-button {
   position: relative;
-  width: 150px;
   height: 48px;
   display: flex;
   justify-content: center;
