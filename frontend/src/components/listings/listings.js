@@ -174,8 +174,10 @@ export const GroupListings = () => {
   }
 
   useEffect(() => {
-    //get rooms
-    getRooms();
+    if (userLocal) {
+      //get rooms
+      getRooms();
+    }
   }, []);
 
   useEffect(() => {
