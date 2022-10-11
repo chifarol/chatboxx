@@ -16,7 +16,8 @@
     "start": "node ./backend/index.js",
     "watch": "nodemon ./backend/index.js",
     "dev": "webpack --mode development --watch --entry ./frontend/src/index.js --output-path ./backend/public",
-    "build": "webpack --mode  production  --watch --entry ./frontend/src/index.js --output-path ./backend/public"
+    "build-webpack": "webpack --mode  production  --watch --entry ./frontend/src/index.js --output-path ./backend/public",
+    "build": "npm install && npm run start"
   },
   "keywords": [],
   "license": "ISC",
