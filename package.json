@@ -1,10 +1,11 @@
 {
   "name": "chatboxx",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chatboxx is a chat app where users can create rooms, join rooms, send direct messages and recieve notifications all in real time",
   "author": "Ilodigwe Chinaza",
   "main": "index.js",
   "homepage": "https://chatboxx.onrender.com/",
+  "demo url": "https://chatboxx.onrender.com/",
   "repository": {
    "type": "git",
    "url": "git+https://github.com/chifarol/chatboxx.git"
