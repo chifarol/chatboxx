@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import "./settings.css";
 import { Spinner } from "../../loading-spinner/spinner";
 import { getFilePath, imageUpload } from "../../utils";
 import axios from "axios";
+import AlertContext from "../../contexts/alert";
 
 const Settings = () => {
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
@@ -19,6 +20,8 @@ const Settings = () => {
   let [displayImg, setDisplayImg] = useState("");
   // for user object
   let [user, setUser] = useState({});
+  // flash message
+  const { setAlert } = useContext(AlertContext);
 
   //fetch user data on mount
   useEffect(() => {
@@ -88,7 +91,12 @@ const Settings = () => {
       imageUpload(tempPicture, "user", userLocal.username)
         .then((res) => uploadUser(res))
         .catch((e) => {
-          console.log(e);
+          console.log(e.response);
+          setAlert({
+            text: "Could not upload image",
+            active: true,
+            type: "error",
+          });
           // turn off uploading state on cloudinary upload error
           setUpdateLoading(false);
         });
