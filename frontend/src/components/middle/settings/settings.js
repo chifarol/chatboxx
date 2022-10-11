@@ -35,7 +35,6 @@ const Settings = () => {
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         setUser(res.data.user);
       })
@@ -87,7 +86,6 @@ const Settings = () => {
     setUpdateLoading(true);
     // if user profile image has a file object, upload to cloudinary before calling uploadUser() fxn
     if (tempPicture.name) {
-      console.log("tempPicture", tempPicture);
       imageUpload(tempPicture, "user", userLocal.username)
         .then((res) => uploadUser(res))
         .catch((e) => {
