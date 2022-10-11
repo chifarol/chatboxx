@@ -6,6 +6,7 @@ import "./listings.css";
 import { Spinner } from "../loading-spinner/spinner";
 import { SocketContext } from "../contexts/socket";
 import { NoResult, NoResultWithLink } from "../search/search";
+import { decode } from "html-entities";
 
 /**
  * @param string room room object.
@@ -49,7 +50,9 @@ const RoomListingItem = ({ room, userLocal, newMsg }) => {
             ) : (
               ""
             )}
-            <span className="list-item-group-two-msg">{lastMsg.body}</span>
+            <span className="list-item-group-two-msg">
+              {decode(lastMsg.body)}
+            </span>
           </p>
         )}
       </div>
@@ -277,7 +280,9 @@ const DMListingItem = ({ dm, newDm }) => {
         <p className="list-item-group-two-chat f12 w300">
           <span className={lastMsg.date > dm[1] ? "green" : ""}>
             {lastMsg.from === userLocal.username && "You: "}
-            <span className="list-item-group-two-msg">{lastMsg.body}</span>
+            <span className="list-item-group-two-msg">
+              {decode(lastMsg.body)}
+            </span>
           </span>
         </p>
       </div>

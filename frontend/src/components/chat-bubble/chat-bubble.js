@@ -5,6 +5,7 @@ import { getDateTimeString } from "../utils";
 import "./chat-bubble.css";
 import AlertContext from "../contexts/alert";
 import { Spinner } from "../loading-spinner/spinner";
+import { decode } from "html-entities";
 
 // message state: pending, unread or read
 export const MsgState = ({ state = "" }) =>
@@ -34,7 +35,7 @@ export const ChatBubbleGroupInfo = ({ msg }) => {
     <div className="chat-bubble-info-container center">
       <hr className="chat-bubble-info-divider" />
       <span className="chat-bubble-info bg-gray f12 w300 center">
-        {msg.body}
+        {decode(msg.body)}
       </span>
       <hr className="chat-bubble-info-divider" />
     </div>
@@ -57,7 +58,9 @@ const ChatBubble = ({ msg }) => {
             <img src={msg.author.picture} crossOrigin="anonymous" />
           </Link>
           <div className="chat-bubble-message">
-            <div className="chat-bubble-message-text w300">{msg.body}</div>
+            <div className="chat-bubble-message-text w300">
+              {decode("&copy;", { level: "xml" })}
+            </div>
             <div className="chat-bubble-message-info">
               <span className="chat-bubble-message-info-time f12">
                 {getDateTimeString(msg.date, "HrMin")}
@@ -85,7 +88,9 @@ export const ChatBubbleDM = ({ msg }) => {
         // if msg.active !==false
         <div className="chat-bubble-group-container">
           <div className="chat-bubble-message">
-            <div className="chat-bubble-message-text w300">{msg.body}</div>
+            <div className="chat-bubble-message-text w300">
+              {decode(msg.body)}
+            </div>
             <div className="chat-bubble-message-info">
               <span className="chat-bubble-message-info-time f12">
                 {getDateTimeString(msg.date, "HrMin")}
@@ -227,7 +232,7 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
         <div className={`chat-bubble-me-container`}>
           <div className="chat-bubble-me-message">
             <div className="chat-bubble-message-text w300">
-              {!deleted ? msg.body : "message deleted by the author"}
+              {!deleted ? decode(msg.body) : "message deleted by the author"}
             </div>
             <div className="chat-bubble-message-info pos-relative">
               <span

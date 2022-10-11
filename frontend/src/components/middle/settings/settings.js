@@ -5,6 +5,7 @@ import { Spinner } from "../../loading-spinner/spinner";
 import { getFilePath, imageUpload } from "../../utils";
 import axios from "axios";
 import AlertContext from "../../contexts/alert";
+import { decode } from "html-entities";
 
 const Settings = () => {
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
@@ -141,7 +142,7 @@ const Settings = () => {
         </div>
         <div className="settings-field">
           <span className="settings-label">BIO</span>
-          <textarea defaultValue={user.bio} ref={bio}></textarea>
+          <textarea defaultValue={decode(user.bio)} ref={bio}></textarea>
         </div>
 
         <div

@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { BackButton } from "../general/general";
 import { Spinner } from "../../loading-spinner/spinner";
 import "./profile.css";
+import { decode } from "html-entities";
 
 /**
  * component to render user profile page
@@ -72,7 +73,7 @@ const Profile = () => {
               </p>
               <p className="profile-two-info w300">
                 <span>Bio:</span>
-                {user.bio ? user.bio : "-"}
+                {user.bio ? decode(user.bio) : "-"}
               </p>
               {user.username !== userLocal.username && (
                 <Link

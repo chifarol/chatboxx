@@ -10,6 +10,7 @@ import AlertContext from "../../contexts/alert";
 import { SocketContext } from "../../contexts/socket";
 import { DMListContext } from "../../contexts/msgs";
 import { BackButton } from "../general/general";
+import { decode } from "html-entities";
 
 /**
  *renders direct messages between main user and target user

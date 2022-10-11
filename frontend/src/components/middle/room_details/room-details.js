@@ -6,6 +6,7 @@ import axios from "axios";
 import "./room-details.css";
 import { getFilePath, imageUpload } from "../../utils";
 import { BackButton } from "../general/general";
+import { decode } from "html-entities";
 
 const UpdateRoomInfo = ({ room }) => {
   // room name ref
@@ -92,7 +93,7 @@ const UpdateRoomInfo = ({ room }) => {
           {
             room_id: room._id,
             payload: {
-              name: name.current.value || room.name,
+              name: name.current.value || decode(room.name),
               topics: topics.current.value
                 ? arrayfy(topics.current.value)
                 : room.topics,
@@ -157,7 +158,7 @@ const UpdateRoomInfo = ({ room }) => {
         </div>
         <div className="settings-field">
           <span className="settings-label">Room Name</span>
-          <input defaultValue={room.name} ref={name}></input>
+          <input defaultValue={decode(room.name)} ref={name}></input>
         </div>
         <div className="settings-field">
           <span className="red f12 w300">{topicError}</span>
@@ -210,7 +211,7 @@ const RoomInfo = ({ room, currentUser }) => {
             </div>
             <p className="room-info-item w300">
               <span>Room Name:</span>
-              {room.name}
+              {decode(room.name)}
             </p>
             <p className="room-info-item w300">
               <span>Topics:</span>

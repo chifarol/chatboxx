@@ -97,7 +97,7 @@ const CreateRoom = () => {
         window.location.pathname = `/room/${res.data.newRoom._id}`;
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
         // turn off loading state
         setLoading(false);
       });

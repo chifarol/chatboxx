@@ -13,6 +13,7 @@ import { Link, useParams } from "react-router-dom";
 import { SocketContext } from "../../contexts/socket";
 import { DMListContext } from "../../contexts/msgs";
 import { BackButton } from "../general/general";
+import { decode } from "html-entities";
 
 /**
  * component to render room and room messgaes
@@ -203,7 +204,7 @@ const Room = () => {
           to={`/room_details/${room._id}`}
           className="room-top-second pointer"
         >
-          <span className="room-room-name">{room.name}</span>
+          <span className="room-room-name">{decode(room.name)}</span>
           {room.members && (
             <span className="room-room-metrics f12 w300 gray">
               {`${room.members.length}`} member
