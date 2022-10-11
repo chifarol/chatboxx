@@ -89,7 +89,7 @@ const Settings = () => {
       imageUpload(tempPicture, "user", userLocal.username)
         .then((res) => uploadUser(res))
         .catch((e) => {
-          console.log(e.response);
+          console.log(e);
           setAlert({
             text: "Could not upload image",
             active: true,
