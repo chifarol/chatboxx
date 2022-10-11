@@ -671,11 +671,11 @@ apiRoutes.post("/cloudinary_signature/", auth, async (req, res) => {
   const { params } = req.body;
 
   let timestamp = +new Date();
-  console.log("params", { ...params });
   let signature = cloudinary.utils.api_sign_request(
     { ...params, timestamp },
     CLOUDINARY_SECRET
   );
+  console.log("params n signature", { ...params, signature });
   return res.json({ signature: signature, timestamp: timestamp });
 });
 
