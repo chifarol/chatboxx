@@ -3,7 +3,7 @@ const app = express();
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const http = require("http");
-const session = require("express-session");
+const session = require("cookie-session");
 const helmet = require("helmet");
 // for logging requests
 const morgan = require("morgan");
