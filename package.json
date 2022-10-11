@@ -2,7 +2,17 @@
   "name": "chatboxx",
   "version": "1.0.0",
   "description": "",
+  "author": "Ilodigwe Chinaza",
   "main": "index.js",
+  "homepage": "https://chatboxx.onrender.com/",
+  "repository": {
+   "type": "git",
+   "url": "git+https://github.com/chifarol/chatboxx.git"
+ },
+  "engines": {
+   "npm": ">=8.15.0",
+   "node": ">=v18.7.0"
+ },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "initialize": "npm install",
@@ -12,7 +22,6 @@
     "build": "webpack --mode  production  --watch --entry ./frontend/src/index.js --output-path ./backend/public"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.26.1",
