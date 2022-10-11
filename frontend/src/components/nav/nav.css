@@ -1,7 +1,6 @@
 .app-wrapper {
   display: flex;
   background-color: var(--gray-blue);
-  height: 100%;
 }
 
 .nav-container {
@@ -14,7 +13,6 @@
   color: var(--light-gray);
   font-size: 20px;
   font-weight: 700;
-  height: 100vh;
 }
 .nav-container svg {
   width: 32px;
