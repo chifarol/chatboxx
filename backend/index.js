@@ -131,8 +131,10 @@ CSP["connect-src"] = [
   `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
   `http://localhost:${PORT_IO}`,
   `https://chatboxx.onrender.com:${PORT_IO}`,
+  `https://pleasant-bedclothes-deer.cyclic.app:${PORT_IO}`,
   `ws://localhost:${PORT_IO}`,
   `ws://chatboxx.onrender.com:${PORT_IO}`,
+  `wss://pleasant-bedclothes-deer.cyclic.app:${PORT_IO}`,
   `wss://chatboxx.onrender.com:${PORT_IO}`,
 ];
 app.use(
