@@ -83,6 +83,10 @@
   .nav-sm-item:hover svg {
     fill: var(--dark) !important;
   }
+  #notification-dot {
+    margin-bottom: 30px !important;
+    margin-left: 0 !important;
+  }
   .main-container {
     margin-bottom: 80px !important;
   }

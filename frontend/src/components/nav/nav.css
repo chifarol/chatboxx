@@ -59,7 +59,6 @@
   fill: var(--dark);
 }
 #notification-dot {
-  margin-left: auto !important;
   width: 20px !important;
   height: 20px !important;
   border-radius: 50%;
