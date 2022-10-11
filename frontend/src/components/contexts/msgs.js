@@ -78,9 +78,7 @@ export const DMListContextProvider = ({ children }) => {
   function updateNotif(username) {
     // if user is not currently in the third party dm screen
     if (window.location.pathname !== `/dm/${username}`) {
-      if (!notif.includes(username)) {
-        getDMs();
-      }
+      setNotif([...new Set([...notif, username])]);
     } else {
       setNotif(notif.filter((e) => e !== username));
     }
@@ -154,7 +152,7 @@ export const DMListContextProvider = ({ children }) => {
     }
     // if user is not currently viewing the room
     else {
-      getRooms();
+      setRoomNotif([...new Set([...roomNotif, id])]);
     }
   }
   // run once on mount

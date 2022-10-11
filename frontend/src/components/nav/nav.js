@@ -25,6 +25,9 @@ const NavSmBottom = () => {
    */
   function updateActive() {
     switch (location.pathname) {
+      case "/":
+        setActive(1);
+        break;
       case "/my_rooms":
         setActive(1);
         break;
@@ -36,9 +39,6 @@ const NavSmBottom = () => {
         break;
       case "/search":
         setActive(4);
-        break;
-      case `/profile/${user.username}`:
-        setActive(5);
         break;
 
       default:
@@ -156,6 +156,9 @@ const Nav = () => {
   };
   function updateActive() {
     switch (location.pathname) {
+      case "/":
+        setActive(1);
+        break;
       case "/my_rooms":
         setActive(1);
         break;

@@ -5,6 +5,7 @@ import axios from "axios";
 import "./listings.css";
 import { Spinner } from "../loading-spinner/spinner";
 import { SocketContext } from "../contexts/socket";
+import { NoResult, NoResultWithLink } from "../search/search";
 
 /**
  * @param string room room object.
@@ -116,6 +117,12 @@ export const GroupListings = () => {
    * @param array rooms nested array of main user's room activity
    */
   function getRoomsArray(rooms) {
+    if (!rooms.length) {
+      setLoading(false);
+      setUserRooms([]);
+      setMiscUserRooms([]);
+      userRoomsClone = [];
+    }
     // array to temporarily store array of room objects
     let roomArray = [];
     /**
@@ -189,16 +196,23 @@ export const GroupListings = () => {
           <Spinner />
         </div>
       )}
-      {userMiscRooms.map((room) => {
-        return (
-          <RoomListingItem
-            room={room}
-            key={room._id}
-            userLocal={userLocal}
-            newMsg={newMsg}
-          />
-        );
-      })}
+      {userMiscRooms.length > 0
+        ? userMiscRooms.map((room) => {
+            return (
+              <RoomListingItem
+                room={room}
+                key={room._id}
+                userLocal={userLocal}
+                newMsg={newMsg}
+              />
+            );
+          })
+        : !loading && (
+            <NoResultWithLink
+              linkText="Click here to find rooms"
+              url="/search"
+            />
+          )}
     </div>
   );
 };
@@ -377,6 +391,14 @@ export const DMListings = () => {
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
         let dmArray = res.data.user.dms;
+        // if array is empty
+        if (dmArray.length === 0) {
+          setLoading(false);
+          setUserDMs([]);
+          setMiscUserDMs([]);
+          userDMsClone = [];
+          return;
+        }
         getDMsArray(dmArray);
       })
       .catch((e) => {
@@ -404,9 +426,11 @@ export const DMListings = () => {
           <Spinner />
         </div>
       )}
-      {userMiscDMs.map((dm) => (
-        <DMListingItem dm={dm} key={dm[0]} newDm={newDm} />
-      ))}
+      {userMiscDMs.length > 0
+        ? userMiscDMs.map((dm) => (
+            <DMListingItem dm={dm} key={dm[0]} newDm={newDm} />
+          ))
+        : !loading && <NoResult text="No direct messages yet" />}
     </div>
   );
 };
