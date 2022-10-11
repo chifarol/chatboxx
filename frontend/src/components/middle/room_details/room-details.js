@@ -55,6 +55,7 @@ const UpdateRoomInfo = ({ room }) => {
   }
   // triggers room update depending on whether room picture needs uploading too
   const updateRoomFxn = () => {
+    // turn on loading spinner
     setLoading(true);
     if (!checkTopic(topics.current.value)) {
       setLoading(false);
@@ -67,7 +68,9 @@ const UpdateRoomInfo = ({ room }) => {
           updateRoom(newRoomPicture);
         })
         .catch((e) => {
-          console.log(e);
+          // turn off loading spinner
+          setLoading(false);
+          console.log(e.response);
           setAlert({
             text: "Could not upload image",
             active: true,
