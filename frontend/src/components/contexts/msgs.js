@@ -12,7 +12,12 @@ export const DMListContextProvider = ({ children }) => {
   const [roomNotif, setRoomNotif] = useState([]);
   // there is no user in session yet
   if (!userLocal) {
-    return <DMListContext.Provider>{children}</DMListContext.Provider>;
+    function updateNotif(username) {}
+    function updateRoomNotif(id) {}
+    const value = { notif, setNotif, updateNotif, updateRoomNotif, roomNotif };
+    return (
+      <DMListContext.Provider value={value}>{children}</DMListContext.Provider>
+    );
   }
   // api header config
   const config = {

@@ -12,12 +12,12 @@ const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    {/* <SocketContextProvider>
-      <DMListContextProvider> */}
-    <AlertContextProvider>
-      <App />
-    </AlertContextProvider>
-    {/* </DMListContextProvider>
-    </SocketContextProvider> */}
+    <SocketContextProvider>
+      <DMListContextProvider>
+        <AlertContextProvider>
+          <App />
+        </AlertContextProvider>
+      </DMListContextProvider>
+    </SocketContextProvider>
   </BrowserRouter>
 );
