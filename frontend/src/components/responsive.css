@@ -31,7 +31,8 @@
     position: fixed !important;
     bottom: 0 !important;
     width: 100% !important;
-    height: 80px !important;
+    height: 65px !important;
+    z-index: 10;
     background-color: var(--dark) !important;
     display: flex !important;
     justify-content: space-around !important;
@@ -53,11 +54,12 @@
   }
   .nav-sm-item {
     position: relative !important;
-    padding: 20px !important;
     display: flex !important;
     height: auto !important;
     height: 100% !important;
     width: 100% !important;
+    align-items: center;
+    justify-content: center;
   }
   .nav-sm-item .notification-dot {
     position: absolute !important;
@@ -71,7 +73,6 @@
   .nav-sm-item.active svg,
   .nav-sm-item:hover svg {
     fill: var(--dark) !important;
-    margin-bottom: auto !important;
   }
   .main-container {
     margin-bottom: 80px !important;
