@@ -3,10 +3,7 @@ import io from "socket.io-client";
 import axios from "axios";
 // const { SOCKET_URL } = process.env;
 
-export const socket = io.connect(`${window.location.hostname}:4001`, {
-  transports: ["websocket"],
-  upgrade: false,
-});
+export const socket = io.connect(`${window.location.hostname}:4001`);
 export const SocketContext = createContext();
 export const SocketContextProvider = ({ children }) => {
   let socketId;
