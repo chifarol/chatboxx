@@ -96,4 +96,5 @@
   flex-grow: 1;
   width: 100%;
   background-color: var(--gray-blue);
+  max-height: 100vh;
 }
