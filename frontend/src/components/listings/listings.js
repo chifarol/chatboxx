@@ -75,12 +75,7 @@ export const GroupListings = () => {
   // for new incoming message from socket.io
   const [newMsg, setNewMsg] = useState([]);
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      auth: userLocal.token,
-    },
-  };
+
   // search box functionality
   function search(keyword) {
     let searchRes = userRooms.filter((room) =>
@@ -123,6 +118,12 @@ export const GroupListings = () => {
       setMiscUserRooms([]);
       userRoomsClone = [];
     }
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth: userLocal.token,
+      },
+    };
     // array to temporarily store array of room objects
     let roomArray = [];
     /**
@@ -151,6 +152,12 @@ export const GroupListings = () => {
    *fetch room activity array of main user
    */
   function getRooms() {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth: userLocal.token,
+      },
+    };
     if (!userMiscRooms) {
       setLoading(true);
     }
@@ -299,12 +306,6 @@ export const DMListings = () => {
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
   // array to temporarily store array of dm objects
   let userDMsClone = [];
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      auth: userLocal.token,
-    },
-  };
   /**
    * sort dm array by most recent messages
    * @param array array array of dm objects
@@ -358,6 +359,12 @@ export const DMListings = () => {
    * @param array arr nested array of main user's dm activity
    */
   function getDMsArray(arr) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth: userLocal.token,
+      },
+    };
     // array to temporarily store nested array of dm objects
     let dmArray = [];
     arr.forEach((e, index) => {
@@ -386,6 +393,12 @@ export const DMListings = () => {
    *fetch dm activity array of main user
    */
   function getDMs() {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        auth: userLocal.token,
+      },
+    };
     setLoading(true);
     axios
       .get(`/api/user?username=${userLocal.username}`, config)
