@@ -9,10 +9,6 @@
    "type": "git",
    "url": "git+https://github.com/chifarol/chatboxx.git"
  },
-  "engines": {
-   "npm": ">=8.15.0",
-   "node": ">=v18.7.0"
- },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "initialize": "npm install",
