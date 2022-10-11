@@ -148,12 +148,7 @@ const Nav = () => {
   // socket io object
   const { socket } = useContext(SocketContext);
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      auth: userLocal.token,
-    },
-  };
+
   function updateActive() {
     switch (location.pathname) {
       case "/":
