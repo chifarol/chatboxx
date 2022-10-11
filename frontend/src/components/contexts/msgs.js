@@ -14,7 +14,13 @@ export const DMListContextProvider = ({ children }) => {
   if (!userLocal) {
     function updateNotif(username) {}
     function updateRoomNotif(id) {}
-    const value = { notif, setNotif, updateNotif, updateRoomNotif, roomNotif };
+    const value = {
+      notif: notif,
+      setNotif,
+      updateNotif,
+      updateRoomNotif,
+      roomNotif,
+    };
     return (
       <DMListContext.Provider value={value}>{children}</DMListContext.Provider>
     );
