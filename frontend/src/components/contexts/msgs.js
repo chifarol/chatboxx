@@ -10,10 +10,11 @@ export const DMListContextProvider = ({ children }) => {
   const userLocal = JSON.parse(sessionStorage.getItem("user"));
   const [notif, setNotif] = useState([]);
   const [roomNotif, setRoomNotif] = useState([]);
-  // api header config
+  // there is no user in session yet
   if (!userLocal) {
-    return;
+    return <DMListContext.Provider>{children}</DMListContext.Provider>;
   }
+  // api header config
   const config = {
     headers: {
       "Content-Type": "application/json",

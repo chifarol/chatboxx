@@ -11,8 +11,9 @@ export const SocketContext = createContext();
 export const SocketContextProvider = ({ children }) => {
   let socketId;
   let userLocal = JSON.parse(sessionStorage.getItem("user"));
+  // there is no user in session yet
   if (!userLocal) {
-    return;
+    return <SocketContext.Provider>{children}</SocketContext.Provider>;
   }
   const config = {
     headers: {
