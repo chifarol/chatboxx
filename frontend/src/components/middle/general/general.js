@@ -36,7 +36,8 @@ const General = ({ type, title }) => {
   return (
     <div className="general-container">
       <div className="general-top uppercase">
-        {type === "profile" && <BackButton />} {title}
+        {type === "profile" || type === "my_settings" ? <BackButton /> : ""}{" "}
+        {title}
       </div>
       <div className="general-body scrollbar">
         {type === "create_room" ? (
