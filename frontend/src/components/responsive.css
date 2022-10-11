@@ -61,6 +61,15 @@
     align-items: center;
     justify-content: center;
   }
+  .nav-sm-item-profile {
+    position: relative !important;
+    display: flex !important;
+    height: auto !important;
+    height: 100% !important;
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+  }
   .nav-sm-item .notification-dot {
     position: absolute !important;
     right: 5px !important;

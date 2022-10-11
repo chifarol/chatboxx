@@ -123,7 +123,9 @@ const NavSmBottom = () => {
           </svg>
         </Link>
         <div
-          className={`nav-sm-item pos-relative ${active === 5 && "active"}`}
+          className={`nav-sm-item-profile pos-relative ${
+            active === 5 && "active"
+          }`}
           onClick={() => setShowPopUp(!showPopUp)}
         >
           <img
