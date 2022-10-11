@@ -111,7 +111,7 @@ io.on("connection", (socket) => {
 });
 
 server.listen(
-  process.env.IS_RAILWAY ? "0.0.0.0:" + process.env.PORT_IO : PORT_IO,
+  process.env.IS_RAILWAY ? "0.0.0.0:" + process.env.RAILWAY_PORT_IO : PORT_IO,
   () => {
     console.log("socket IO SERVER IS RUNNING");
   }
@@ -168,7 +168,7 @@ app.use("/api", apiRoutes);
 app.use("", normalRoutes);
 
 app.listen(
-  process.env.IS_RAILWAY ? "0.0.0.0:" + process.env.PORT : port,
+  process.env.IS_RAILWAY ? "0.0.0.0:" + process.env.RAILWAY_PORT : port,
   "localhost",
   () => {
     console.log("Listening on port ", port);
