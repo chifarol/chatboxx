@@ -258,7 +258,7 @@ export const Register = () => {
             // redirect to login on successful registration after 5 seconds
             setTimeout(() => {
               window.location.pathname = "/login";
-            }, 5000);
+            }, 2000);
           }
           // if api response is duplicate email
           else if (res.data.error.includes("email_1 dup key")) {

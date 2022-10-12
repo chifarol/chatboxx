@@ -38,7 +38,7 @@ apiRoutes.post(
   body("email").escape().isEmail().normalizeEmail(),
   body("username").trim().notEmpty().escape(),
   body("password").trim().notEmpty().escape(),
-  (req, res) => {
+  async (req, res) => {
     const credentials = req.body;
     // convert username string to slug
     credentials.username = slugify(credentials.username, "_");
@@ -51,7 +51,29 @@ apiRoutes.post(
     //save to database
     newUser
       .save()
-      .then((save_res) => {
+      .then(async (save_res) => {
+        const targetRoom = await Room.findOne({
+          name: "Welcome Channel",
+          "host.username": "chifarol",
+        });
+        const targetUsername = credentials.username;
+        const hostObj = await User.findOne({ username: targetUsername });
+        // join room - add user object to room members
+        targetRoom.members.push(hostObj);
+        // remove user from list of people that left voluntarily
+        targetRoom.left_voluntarily = targetRoom.left_voluntarily.filter(
+          (e) => e !== targetUsername
+        );
+        // create new room info message
+        let newRoomMsg = RoomMSG({
+          author: targetRoom.host,
+          body: `${targetUsername} joined`,
+          type: "info",
+          date: Date.now(),
+        });
+        targetRoom.msgs.push(newRoomMsg);
+        targetRoom.save();
+        updateRoomActivity(hostObj, targetRoom._id);
         res.json({ status: true });
       })
       .catch((e) => {

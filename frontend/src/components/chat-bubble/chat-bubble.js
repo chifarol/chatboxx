@@ -226,7 +226,6 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
   return (
     <>
       {deleted || !msg.active ? (
-        // if msg.active === false or was just deleted
         <ChatDeletedMe />
       ) : (
         <div className={`chat-bubble-me-container`}>
