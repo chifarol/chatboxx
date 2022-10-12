@@ -240,7 +240,7 @@ const DM = () => {
             <Spinner />
           </span>
         ) : (
-          !msgs[0] && <NoResult text="No Direct Messages Yet" />
+          !msgs[0] && !newMsgs[0] && <NoResult text="No Direct Messages Yet" />
         )}
         {msgs.map((msg) => {
           // if message is from main user
