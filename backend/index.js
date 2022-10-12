@@ -110,12 +110,9 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(
-  process.env.IS_RAILWAY ? "0.0.0.0:" + process.env.RAILWAY_PORT_IO : PORT_IO,
-  () => {
-    console.log("socket IO SERVER IS RUNNING");
-  }
-);
+server.listen(PORT_IO, () => {
+  console.log("socket IO SERVER IS RUNNING at port - ", PORT_IO);
+});
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -167,10 +164,6 @@ app.use("/api", apiRoutes);
 // for none API routes
 app.use("", normalRoutes);
 
-app.listen(
-  process.env.IS_RAILWAY ? "0.0.0.0:" + process.env.RAILWAY_PORT : port,
-  "localhost",
-  () => {
-    console.log("Listening on port ", port);
-  }
-);
+app.listen(port, "localhost", () => {
+  console.log("Listening on port ", port);
+});
