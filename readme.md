@@ -15,7 +15,7 @@
   </a>
 </p>
 
-> Chatboxx is a chat app where users can create rooms, join rooms, send direct messages and recieve notifications all in real time
+> Chatboxx is a chat web app where users can create rooms, join rooms, send direct messages and recieve notifications all in real time
 
 ### 🏠 [Homepage](https://chatboxx.onrender.com/login)
 
