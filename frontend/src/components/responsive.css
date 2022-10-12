@@ -1,5 +1,5 @@
 /* medium screen */
-@media screen and (max-width: 830px) and (min-width: 481px) {
+@media screen and (max-width: 830px) and (min-width: 521px) {
   .profile-container {
     flex-direction: column !important;
     align-items: center !important;
@@ -23,7 +23,7 @@
   }
 }
 /* small screen */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 520px) {
   .nav-container {
     display: none !important;
   }
