@@ -319,13 +319,14 @@ export const Search = () => {
   return (
     <div className="search-container gray">
       <div className="search-search pos-relative">
-        <span className="search-button pointer" onClick={() => search()}>
-          Search
-        </span>
         <input
           placeholder="Enter search term"
           onInput={(e) => setSearchString(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && search()}
         />
+        <span className="search-button pointer" onClick={() => search()}>
+          Search
+        </span>
       </div>
       <div className="search-phrase w300 f12">{displayString}</div>
       <div className="search-tabs">
