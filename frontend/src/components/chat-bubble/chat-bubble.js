@@ -59,7 +59,7 @@ const ChatBubble = ({ msg }) => {
           </Link>
           <div className="chat-bubble-message">
             <div className="chat-bubble-message-text w300">
-              {decode("&copy;", { level: "xml" })}
+              {decode(msg.body)}
             </div>
             <div className="chat-bubble-message-info">
               <span className="chat-bubble-message-info-time f12">
