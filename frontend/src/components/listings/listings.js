@@ -45,7 +45,7 @@ const RoomListingItem = ({ room, userLocal, newMsg }) => {
               <span>
                 {lastMsg.author.username !== userLocal.username
                   ? lastMsg.author.username
-                  : "You"}
+                  : "You:"}
               </span>
             ) : (
               ""
