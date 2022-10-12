@@ -58,11 +58,11 @@ const ChatBubble = ({ msg }) => {
             <img src={msg.author.picture} crossOrigin="anonymous" />
           </Link>
           <div className="chat-bubble-message">
-            <div className="chat-bubble-message-text w300">
+            <div className="chat-bubble-message-text w300 f16">
               {decode(msg.body)}
             </div>
             <div className="chat-bubble-message-info">
-              <span className="chat-bubble-message-info-time f12">
+              <span className="chat-bubble-message-info-time f12 w300">
                 {getDateTimeString(msg.date, "HrMin")}
               </span>
             </div>
@@ -88,11 +88,11 @@ export const ChatBubbleDM = ({ msg }) => {
         // if msg.active !==false
         <div className="chat-bubble-group-container">
           <div className="chat-bubble-message">
-            <div className="chat-bubble-message-text w300">
+            <div className="chat-bubble-message-text w300 f16">
               {decode(msg.body)}
             </div>
             <div className="chat-bubble-message-info">
-              <span className="chat-bubble-message-info-time f12">
+              <span className="chat-bubble-message-info-time f12 w300">
                 {getDateTimeString(msg.date, "HrMin")}
               </span>
             </div>
@@ -231,7 +231,7 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
       ) : (
         <div className={`chat-bubble-me-container`}>
           <div className="chat-bubble-me-message">
-            <div className="chat-bubble-message-text w300">
+            <div className="chat-bubble-message-text w300 f16">
               {!deleted ? decode(msg.body) : "message deleted by the author"}
             </div>
             <div className="chat-bubble-message-info pos-relative">
@@ -260,7 +260,7 @@ export const ChatBubbleMe = ({ isRoom = false, id, msg, state }) => {
                   </span>
                 </span>
               )}
-              <span className="chat-bubble-message-info-time f12">
+              <span className="chat-bubble-message-info-time f12 w300">
                 {getDateTimeString(msg.date, "HrMin")}
               </span>
               <span className="chat-bubble-message-info-status">

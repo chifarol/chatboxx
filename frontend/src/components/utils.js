@@ -109,7 +109,9 @@ export function getDateTimeString(date, type) {
   let minutes = String(date.getMinutes()).padStart(2, "0"); // get day 1-31
   switch (type) {
     case "HrMin":
-      return `${hour}:${minutes}`;
+      return `${monthMap[month]}'${year
+        .toString()
+        .substr(-2)} at ${hour}:${minutes}`;
       break;
     default:
       return `${monthMap[month]} ${day} ${year} at ${hour}:${minutes}`;

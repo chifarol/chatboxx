@@ -31,6 +31,7 @@
 }
 .chat-bubble-message-info-time {
   color: var(--dark-gray);
+  margin-right: 5px;
 }
 .chat-bubble-message-info-status svg {
   height: 16px;
@@ -105,6 +106,7 @@
 
 .chat-bubble-message-info-options {
   margin-right: auto;
+  padding-right: 5px;
 }
 .chat-bubble-message-info-options > svg {
   height: 16px;
