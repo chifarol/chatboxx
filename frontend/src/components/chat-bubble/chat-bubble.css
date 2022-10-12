@@ -20,6 +20,7 @@
 }
 .chat-bubble-message-text {
   color: var(--light-gray);
+  white-space: pre-line;
 }
 .chat-bubble-message-info {
   margin-top: 10px;
