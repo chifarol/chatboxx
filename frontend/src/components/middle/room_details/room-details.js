@@ -172,7 +172,7 @@ const UpdateRoomInfo = ({ room }) => {
         <div className="settings-field">
           <span className="settings-label">Description</span>
           <textarea
-            defaultValue={room.description}
+            defaultValue={decode(room.description)}
             ref={description}
           ></textarea>
         </div>
