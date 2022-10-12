@@ -149,12 +149,13 @@ const Room = () => {
     axios
       .get(`/api/join_room?id=${roomIdRoute}`, config)
       .then((res) => {
+        setJoinLeaveLoading(false);
         if (res.data.status === "joined") {
-          window.location.reload();
+          fetchRoom();
           setIsMember(true);
         } else {
           setIsMember(false);
-          window.location.reload();
+          fetchRoom();
         }
       })
       .catch((e) => {
