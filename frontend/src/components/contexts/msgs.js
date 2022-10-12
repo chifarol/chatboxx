@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { SocketContext } from "./socket";
 // temporary stores id for rooms with unread messages
 let notifRoomClone = [];
+let dmActivity = [];
 export const DMListContext = createContext();
 
 // notification provider/updater for dm/room listings
@@ -76,6 +77,7 @@ export const DMListContextProvider = ({ children }) => {
       .get(`/api/user?username=${userLocal.username}`, config)
       .then((res) => {
         getDMsArray(res.data.user.dms);
+        dmActivity = res.data.user.dms;
       })
       .catch((e) => {
         console.log(e);
@@ -94,9 +96,12 @@ export const DMListContextProvider = ({ children }) => {
       let notifClone = notif;
       notifClone.push(username);
       setNotif([...new Set(notifClone)]);
-    } else {
+    } else if (dmActivity.some((e) => e[0] === username)) {
       let notifClone = notif;
       setNotif(notifClone.filter((e) => e !== username));
+    } else {
+      // fetch dms and update dms notification
+      getDMs();
     }
   }
 

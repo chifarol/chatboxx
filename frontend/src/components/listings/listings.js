@@ -346,6 +346,7 @@ export const DMListings = () => {
         setMiscUserDMs(userDMsClone);
         setNewDM(data);
       } else {
+        getDMs();
       }
     });
   }, [socket]);
