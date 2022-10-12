@@ -3,7 +3,11 @@ import io from "socket.io-client";
 import axios from "axios";
 // const { SOCKET_URL } = process.env;
 
-export const socket = io.connect(`${window.location.hostname}:4001`);
+export const socket = io.connect(
+  window.location.host.includes("localhost")
+    ? `http://localhost:4001`
+    : "https://chatboxx-socket.onrender.com"
+);
 export const SocketContext = createContext();
 export const SocketContextProvider = ({ children }) => {
   let socketId;

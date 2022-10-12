@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { SocketContext } from "./socket";
-
+// temporary stores id for rooms with unread messages
+let notifRoomClone = [];
 export const DMListContext = createContext();
 
 // notification provider/updater for dm/room listings
@@ -90,9 +91,12 @@ export const DMListContextProvider = ({ children }) => {
   function updateNotif(username) {
     // if user is not currently in the third party dm screen
     if (window.location.pathname !== `/dm/${username}`) {
-      setNotif([...new Set([...notif, username])]);
+      let notifClone = notif;
+      notifClone.push(username);
+      setNotif([...new Set(notifClone)]);
     } else {
-      setNotif(notif.filter((e) => e !== username));
+      let notifClone = notif;
+      setNotif(notifClone.filter((e) => e !== username));
     }
   }
 
@@ -129,6 +133,7 @@ export const DMListContextProvider = ({ children }) => {
           }
           // when it reaches the last room in array
           if (index === rooms.length - 1) {
+            notifRoomClone = [...new Set(unreadRoomArr)];
             setRoomNotif([...new Set(unreadRoomArr)]);
           }
         })
@@ -160,11 +165,25 @@ export const DMListContextProvider = ({ children }) => {
   function updateRoomNotif(id) {
     // if user is currently viewing the room
     if (window.location.pathname.includes(`/room/`)) {
-      setRoomNotif(roomNotif.filter((room_id) => room_id != id));
+      setRoomNotif(notifRoomClone.filter((room_id) => room_id != id));
+      notifRoomClone = notifRoomClone.filter((room_id) => room_id != id);
     }
     // if user is not currently viewing the room
     else {
-      setRoomNotif([...new Set([...roomNotif, id])]);
+      if (id) {
+        notifRoomClone.push(id);
+        setRoomNotif([...new Set(notifRoomClone)]);
+        notifRoomClone = [...new Set(notifRoomClone)];
+      }
+
+      console.log(
+        "id",
+        id,
+        "notifRoom",
+        roomNotif,
+        "notifRoomClone",
+        notifRoomClone
+      );
     }
   }
   // run once on mount
