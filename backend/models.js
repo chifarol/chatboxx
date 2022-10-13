@@ -50,48 +50,6 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
 });
-// to avoid creating unique indexes on roommsgs etc
-const UserSchema_ = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, "Can't be blank"],
-  },
-  email: {
-    type: String,
-    lowercase: true,
-    required: [true, "Can't be blank"],
-    validate: [isEmail, "invalid email"],
-  },
-  bio: {
-    type: String,
-    default: "",
-  },
-  password: {
-    type: String,
-    required: [true, "Can't be blank"],
-  },
-  picture: {
-    type: String,
-    default:
-      "https://res.cloudinary.com/chifarol/image/upload/v1664278102/ChatApp/user/person_FILL1_wght400_GRAD0_opsz48_bdhxq9.png",
-  },
-  rooms: {
-    type: [[]],
-    default: [],
-  },
-  dms: {
-    type: [[]],
-    default: [],
-  },
-  blocked: {
-    type: [String],
-    default: [],
-  },
-  online: {
-    type: Boolean,
-    default: false,
-  },
-});
 
 // add static method to user Model for authenticating by email or username
 UserSchema.statics.findByCredentials = async function (
@@ -112,7 +70,7 @@ UserSchema.statics.findByCredentials = async function (
 };
 const RoomMSGSchema = new Schema({
   author: {
-    type: UserSchema_,
+    type: UserSchema,
     required: true,
   },
   date: {
@@ -169,7 +127,7 @@ const RoomSchema = new Schema({
   },
   description: String,
   host: {
-    type: UserSchema_,
+    type: UserSchema,
     required: true,
   },
   picture: {
@@ -178,11 +136,11 @@ const RoomSchema = new Schema({
       "https://res.cloudinary.com/chifarol/image/upload/v1664278309/ChatApp/room/groups_3_FILL1_wght400_GRAD0_opsz48_fxgipg.png",
   },
   members: {
-    type: [UserSchema_],
+    type: [UserSchema],
     default: [],
   },
   msgs: {
-    type: [UserSchema_],
+    type: [RoomMSGSchema],
     default: [],
   },
   removed: {
