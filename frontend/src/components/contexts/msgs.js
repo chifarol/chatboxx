@@ -180,15 +180,6 @@ export const DMListContextProvider = ({ children }) => {
         setRoomNotif([...new Set(notifRoomClone)]);
         notifRoomClone = [...new Set(notifRoomClone)];
       }
-
-      console.log(
-        "id",
-        id,
-        "notifRoom",
-        roomNotif,
-        "notifRoomClone",
-        notifRoomClone
-      );
     }
   }
   // run once on mount
